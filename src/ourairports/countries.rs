@@ -2,20 +2,22 @@ use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::fs;
 use std::hash::{Hash, Hasher};
+use std::path::PathBuf;
 
 use serde::{Deserialize, Serialize};
 
-use crate::csv_web_request_blocking;
+use crate::ourairports::{Id, vec_string_from_string, ToJsonString};
 
-const AIRPORTS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/countries.csv";
+const COUNTRIES_CSV: &str = "countries.csv";
 
 #[derive(Deserialize, Debug, Clone, Serialize)]
 pub struct Country {
-    id: String,
+    id: Id,
     code: String,
     name: String,
     continent: String,
     wikipedia_link: String,
+    #[serde(deserialize_with = "vec_string_from_string")]
     keywords: Vec<String>,
 }
 
@@ -66,21 +68,21 @@ impl Hash for Country {
     }
 }
 
-/// Returns a `HashMap` of countries  from `countries.csv` with the country id as key and `Country`
+impl ToJsonString for Country {}
+
+/// Returns a `HashMap` of countries from `countries.csv` with the country id as key and `Country`
 /// struct as value
-pub fn get_countries_csv(data_path: Option<std::path::PathBuf>) -> HashMap<String, Country> {
-    let content = if let Some(data_path) = data_path {
-        // open file
-        fs::read_to_string(data_path).expect("could not open file")
-    } else {
-        csv_web_request_blocking(AIRPORTS_CSV_URL).expect("web request error")
-    };
-    // initialise csv reader & return value;
+pub fn get_countries_csv(data_path: &PathBuf) -> crate::ourairports::Result<HashMap<String, Country>> {
+    let mut file_path = PathBuf::from(&data_path);
+    file_path.push(COUNTRIES_CSV);
+    // open file
+    let content = fs::read_to_string(file_path)?;
+    // initialise csv reader & return value
     let mut rdr = csv::Reader::from_reader(content.as_bytes());
     let mut country_map = HashMap::new();
     for result in rdr.deserialize() {
-        let record: Country = result.expect("error in deserializing");
-        country_map.insert(record.id().clone().to_owned(), record);
+        let record: Country = result?;
+        country_map.insert(record.id().to_owned(), record);
     }
-    country_map
+    Ok(country_map)
 }

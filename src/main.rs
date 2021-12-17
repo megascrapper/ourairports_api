@@ -1,15 +1,11 @@
-use std::env::current_dir;
-use std::path::PathBuf;
-use std::collections::HashMap;
-
 use ourairports_api::ourairports::countries::get_countries_csv;
-
-// Some(PathBuf::from(&argv[1]))
+use ourairports_api::ourairports::ToJsonString;
 
 fn main() {
-    let argv: Vec<String> = std::env::args().collect();
-    let countries_data = get_countries_csv(None);
+    let mut data_dir = std::env::current_dir().unwrap();
+    data_dir.push("tmp");
+    let countries_data = get_countries_csv(&data_dir).unwrap();
     for (_, country) in countries_data.iter() {
-        println!("{}", country.name());
+        println!("{}", country.to_json_string().unwrap())
     }
 }

@@ -8,7 +8,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::ourairports::{Id, vec_string_from_string, ToJsonString};
 
-const COUNTRIES_CSV: &str = "countries.csv";
+const COUNTRIES_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/countries.csv";
 
 #[derive(Deserialize, Debug, Clone, Serialize)]
 pub struct Country {
@@ -72,11 +72,9 @@ impl ToJsonString for Country {}
 
 /// Returns a `HashMap` of countries from `countries.csv` with the country id as key and `Country`
 /// struct as value
-pub fn get_countries_csv(data_path: &PathBuf) -> crate::ourairports::Result<HashMap<String, Country>> {
-    let mut file_path = PathBuf::from(&data_path);
-    file_path.push(COUNTRIES_CSV);
-    // open file
-    let content = fs::read_to_string(file_path)?;
+pub fn get_countries_csv() -> crate::ourairports::Result<HashMap<Id, Country>> {
+    // get data
+    let content = crate::web_request_blocking(COUNTRIES_CSV_URL)?;
     // initialise csv reader & return value
     let mut rdr = csv::Reader::from_reader(content.as_bytes());
     let mut country_map = HashMap::new();

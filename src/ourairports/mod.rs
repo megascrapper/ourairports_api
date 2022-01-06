@@ -4,11 +4,11 @@ use serde::de::{self, Unexpected};
 
 pub mod countries;
 
-type Id = String;
+pub type Id = String;
 
 error_chain! {
     foreign_links {
-        Io(std::io::Error);
+        Reqwest(reqwest::Error);
         Csv(csv::Error);
     }
 }

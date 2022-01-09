@@ -5,6 +5,7 @@ use ourairports_api::ourairports::Id;
 
 pub mod countries;
 
+/// Home page.
 #[get("/")]
 pub async fn index() -> impl Responder {
     HttpResponse::Ok().body("<h1>OurAirports API</h1>")

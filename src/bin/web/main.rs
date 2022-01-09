@@ -1,6 +1,5 @@
 use ourairports_api::ourairports::countries::get_countries_csv;
-use ourairports_api::ourairports::Id;
-use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
+use actix_web::{App, HttpServer};
 use crate::pages::{AppState, index};
 use crate::pages::countries::*;
 

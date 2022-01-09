@@ -1,8 +1,6 @@
 use std::cmp::Ordering;
 use std::collections::HashMap;
-use std::fs;
 use std::hash::{Hash, Hasher};
-use std::path::PathBuf;
 
 use serde::{Deserialize, Serialize};
 
@@ -10,6 +8,7 @@ use crate::ourairports::{Id, vec_string_from_string, ToJsonString};
 
 const COUNTRIES_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/countries.csv";
 
+/// Represents a country or country-like entity (e.g. Hong Kong).
 #[derive(Deserialize, Debug, Clone, Serialize)]
 pub struct Country {
     id: Id,
@@ -22,9 +21,7 @@ pub struct Country {
 }
 
 impl Country {
-    pub fn id(&self) -> &str {
-        &self.id
-    }
+    pub fn id(&self) -> &str { &self.id }
     pub fn code(&self) -> &str {
         &self.code
     }

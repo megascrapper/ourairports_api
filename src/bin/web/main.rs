@@ -14,6 +14,7 @@ async fn main() -> std::io::Result<()> {
             })
             .service(index)
             .service(get_countries)
+            .service(get_countries_by_id)
     })
         .bind("127.0.0.1:8080")?
         .run()

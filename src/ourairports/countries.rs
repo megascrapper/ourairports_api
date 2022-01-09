@@ -4,7 +4,7 @@ use std::hash::{Hash, Hasher};
 
 use serde::{Deserialize, Serialize};
 
-use crate::ourairports::{Id, vec_string_from_string, ToJsonString};
+use crate::ourairports::{Id, vec_string_from_string, ToJsonString, Continent};
 
 const COUNTRIES_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/countries.csv";
 
@@ -14,7 +14,7 @@ pub struct Country {
     id: Id,
     code: String,
     name: String,
-    continent: String,
+    continent: Continent,
     wikipedia_link: String,
     #[serde(deserialize_with = "vec_string_from_string")]
     keywords: Vec<String>,
@@ -24,7 +24,7 @@ impl Country {
     pub fn id(&self) -> &str { &self.id }
     pub fn code(&self) -> &str { &self.code }
     pub fn name(&self) -> &str { &self.name }
-    pub fn continent(&self) -> &str { &self.continent }
+    pub fn continent(&self) -> &Continent { &self.continent }
     pub fn wikipedia_link(&self) -> &str {
         &self.wikipedia_link
     }

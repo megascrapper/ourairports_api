@@ -1,5 +1,5 @@
 use error_chain::error_chain;
-use serde::{Deserialize, Deserializer};
+use serde::{Deserialize, Deserializer, Serializer};
 use serde::de::{self, Unexpected};
 
 pub mod countries;
@@ -11,6 +11,17 @@ error_chain! {
         Reqwest(reqwest::Error);
         Csv(csv::Error);
     }
+}
+
+/// List of allowed continent values.
+pub enum Continent {
+    Africa,
+    Antarctica,
+    Asia,
+    Europe,
+    NorthAmerica,
+    Oceania,
+    SouthAmerica
 }
 
 pub trait ToJsonString {
@@ -47,5 +58,35 @@ fn vec_string_from_string<'de, D>(deserializer: D) -> std::result::Result<Vec<St
     match keywords.len() {
         0 => Ok(vec![]),
         _ => Ok(keywords.split(',').map(|s| s.trim().to_string()).collect()),
+    }
+}
+
+fn continents_enum_from_string<'de, D>(deserializer: D) -> std::result::Result<Continent, D::Error>
+    where
+        D: Deserializer<'de>,
+{
+    match String::deserialize(deserializer)?.as_str() {
+        "AF" => Ok(Continent::Africa),
+        "AN" => Ok(Continent::Antarctica),
+        "AS" => Ok(Continent::Asia),
+        "EU" => Ok(Continent::Europe),
+        "NA" => Ok(Continent::NorthAmerica),
+        "OC" => Ok(Continent::Oceania),
+        "SA" => Ok(Continent::SouthAmerica),
+        _ => panic!("invalid continent value")
+    }
+}
+
+fn continents_enum_to_string<S>(value: &Continent) -> std::result::Result<String, S::Error>
+    where S: Serializer
+{
+    match value {
+        Continent::Africa => Ok(String::from("AF")),
+        Continent::Antarctica => Ok(String::from("AN")),
+        Continent::Asia => Ok(String::from("AS")),
+        Continent::Europe => Ok(String::from("EU")),
+        Continent::NorthAmerica => Ok(String::from("NA")),
+        Continent::Oceania => Ok(String::from("OC")),
+        Continent::SouthAmerica => Ok(String::from("SA"))
     }
 }

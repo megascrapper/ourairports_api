@@ -22,15 +22,9 @@ pub struct Country {
 
 impl Country {
     pub fn id(&self) -> &str { &self.id }
-    pub fn code(&self) -> &str {
-        &self.code
-    }
-    pub fn name(&self) -> &str {
-        &self.name
-    }
-    pub fn continent(&self) -> &str {
-        &self.continent
-    }
+    pub fn code(&self) -> &str { &self.code }
+    pub fn name(&self) -> &str { &self.name }
+    pub fn continent(&self) -> &str { &self.continent }
     pub fn wikipedia_link(&self) -> &str {
         &self.wikipedia_link
     }

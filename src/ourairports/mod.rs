@@ -1,8 +1,13 @@
 use error_chain::error_chain;
-use serde::{Serialize, Deserialize, Deserializer, Serializer};
+use serde::{Serialize, Deserialize, Deserializer};
 use serde::de::{self, Unexpected};
 
+pub mod airports;
+pub mod airport_frequencies;
+pub mod runways;
+pub mod navaids;
 pub mod countries;
+pub mod regions;
 
 pub type Id = String;
 

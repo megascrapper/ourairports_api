@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter, write};
 use error_chain::error_chain;
 use serde::{Serialize, Deserialize, Deserializer};
 use serde::de::{self, Unexpected};
@@ -19,7 +20,7 @@ error_chain! {
 }
 
 /// List of allowed continent values.
-#[derive(Deserialize, Serialize, Debug, Clone)]
+#[derive(Deserialize, Serialize, Debug, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
 pub enum Continent {
     #[serde(rename = "AF")]
     Africa,

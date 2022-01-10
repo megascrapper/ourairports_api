@@ -1,12 +1,12 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize, Serialize, Clone, Debug)]
+#[derive(Deserialize, Serialize, Debug, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[serde(rename_all = "snake_case")]
 pub enum AirportType {
-    ClosedAirport,
-    Heliport,
     SmallAirport,
     MediumAirport,
     LargeAirport,
+    Heliport,
     SeaplaneBase,
+    ClosedAirport,
 }

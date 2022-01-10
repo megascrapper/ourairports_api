@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Deserialize, Serialize, Clone, Debug)]
+#[derive(Deserialize, Serialize, Debug, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[serde(rename_all = "SCREAMING-KEBAB-CASE")]
 pub enum NavaidType {
     Dme,
@@ -12,7 +12,7 @@ pub enum NavaidType {
     Vortac
 }
 
-#[derive(Deserialize, Serialize, Clone, Debug)]
+#[derive(Deserialize, Serialize, Debug, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[serde(rename_all = "UPPERCASE")]
 pub enum UsageType {
     Hi,
@@ -22,11 +22,11 @@ pub enum UsageType {
     Rnav
 }
 
-#[derive(Deserialize, Serialize, Clone, Debug)]
+#[derive(Deserialize, Serialize, Debug, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[serde(rename_all = "UPPERCASE")]
 pub enum NavaidPower {
-    High,
-    Medium,
     Low,
+    Medium,
+    High,
     Unknown
 }

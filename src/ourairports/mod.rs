@@ -63,7 +63,7 @@ where
         "no" | "0" => Ok(false),
         other => Err(de::Error::invalid_value(
             Unexpected::Str(other),
-            &"Value must be yes or no",
+            &"Value must be yes and no or 1 and 0",
         )),
     }
 }

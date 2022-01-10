@@ -1,5 +1,5 @@
 use std::cmp::Ordering;
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
 
 use serde::{Deserialize, Serialize};
@@ -129,12 +129,12 @@ pub enum AirportType {
     ClosedAirport,
 }
 
-pub fn get_airports_csv() -> crate::ourairports::Result<HashMap<Id, Airport>> {
+pub fn get_airports_csv() -> crate::ourairports::Result<BTreeMap<Id, Airport>> {
     // get data
     let content = crate::web_request_blocking(AIRPORTS_CSV_URL)?;
     // initialise csv reader & return value
     let mut rdr = csv::Reader::from_reader(content.as_bytes());
-    let mut country_map = HashMap::new();
+    let mut country_map = BTreeMap::new();
     for result in rdr.deserialize() {
         let record: Airport = result?;
         country_map.insert(record.id().to_owned(), record);

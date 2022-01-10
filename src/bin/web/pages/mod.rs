@@ -4,7 +4,7 @@ use ourairports_api::ourairports::countries::{get_countries_csv, Country};
 use ourairports_api::ourairports::regions::{get_regions_csv, Region};
 use ourairports_api::ourairports::Id;
 use serde::Serialize;
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 
 pub mod airports;
 pub mod countries;
@@ -17,9 +17,9 @@ pub async fn index() -> impl Responder {
 }
 
 pub struct AppState {
-    pub airports: HashMap<Id, Airport>,
-    pub countries: HashMap<Id, Country>,
-    pub regions: HashMap<Id, Region>,
+    pub airports: BTreeMap<Id, Airport>,
+    pub countries: BTreeMap<Id, Country>,
+    pub regions: BTreeMap<Id, Region>,
 }
 
 impl AppState {

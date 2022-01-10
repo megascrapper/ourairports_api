@@ -1,5 +1,5 @@
 use std::cmp::Ordering;
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
 
 use serde::{Deserialize, Serialize};
@@ -71,12 +71,12 @@ impl ToJsonString for Country {}
 
 /// Returns a `HashMap` of countries from `countries.csv` with the country id as key and `Country`
 /// struct as value
-pub fn get_countries_csv() -> crate::ourairports::Result<HashMap<Id, Country>> {
+pub fn get_countries_csv() -> crate::ourairports::Result<BTreeMap<Id, Country>> {
     // get data
     let content = crate::web_request_blocking(COUNTRIES_CSV_URL)?;
     // initialise csv reader & return value
     let mut rdr = csv::Reader::from_reader(content.as_bytes());
-    let mut country_map = HashMap::new();
+    let mut country_map = BTreeMap::new();
     for result in rdr.deserialize() {
         let record: Country = result?;
         country_map.insert(record.id().to_owned(), record);

@@ -1,13 +1,13 @@
 use error_chain::error_chain;
-use serde::{Serialize, Deserialize, Deserializer};
 use serde::de::{self, Unexpected};
+use serde::{Deserialize, Deserializer, Serialize};
 
-pub mod airports;
 pub mod airport_frequencies;
-pub mod runways;
-pub mod navaids;
+pub mod airports;
 pub mod countries;
+pub mod navaids;
 pub mod regions;
+pub mod runways;
 
 pub type Id = u64;
 
@@ -34,23 +34,29 @@ pub enum Continent {
     #[serde(rename = "OC")]
     Oceania,
     #[serde(rename = "SA")]
-    SouthAmerica
+    SouthAmerica,
 }
 
 pub trait ToJsonString {
-    fn to_json_string(&self) -> serde_json::Result<String> where Self: serde::Serialize {
+    fn to_json_string(&self) -> serde_json::Result<String>
+    where
+        Self: serde::Serialize,
+    {
         serde_json::to_string(&self)
     }
 
-    fn to_json_string_pretty(&self) -> serde_json::Result<String> where Self: serde::Serialize {
+    fn to_json_string_pretty(&self) -> serde_json::Result<String>
+    where
+        Self: serde::Serialize,
+    {
         serde_json::to_string_pretty(&self)
     }
 }
 
 /// Converts a string to a boolean based on "yes" and "no"
 fn bool_from_str<'de, D>(deserializer: D) -> std::result::Result<bool, D::Error>
-    where
-        D: Deserializer<'de>,
+where
+    D: Deserializer<'de>,
 {
     match String::deserialize(deserializer)?.to_lowercase().as_str() {
         "yes" | "1" => Ok(true),
@@ -64,8 +70,8 @@ fn bool_from_str<'de, D>(deserializer: D) -> std::result::Result<bool, D::Error>
 
 /// Transforms a comma-separated string to a vector.
 fn vec_string_from_string<'de, D>(deserializer: D) -> std::result::Result<Vec<String>, D::Error>
-    where
-        D: Deserializer<'de>,
+where
+    D: Deserializer<'de>,
 {
     let keywords = String::deserialize(deserializer)?;
     match keywords.len() {

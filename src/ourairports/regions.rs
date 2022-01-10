@@ -4,7 +4,7 @@ use std::hash::{Hash, Hasher};
 
 use serde::{Deserialize, Serialize};
 
-use crate::ourairports::{Id, vec_string_from_string, ToJsonString, Continent};
+use crate::ourairports::{vec_string_from_string, Continent, Id, ToJsonString};
 
 const REGIONS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/regions.csv";
 
@@ -22,32 +22,56 @@ pub struct Region {
 }
 
 impl Region {
-    pub fn id(&self) -> Id { self.id }
-    pub fn code(&self) -> &str { &self.code }
-    pub fn local_code(&self) -> &str { &self.local_code }
-    pub fn name(&self) -> &str { &self.name }
-    pub fn continent(&self) -> &Continent { &self.continent }
-    pub fn iso_country(&self) -> &str { &self.iso_country }
-    pub fn wikipedia_link(&self) -> &str { &self.wikipedia_link }
-    pub fn keywords(&self) -> &Vec<String> { &self.keywords }
+    pub fn id(&self) -> Id {
+        self.id
+    }
+    pub fn code(&self) -> &str {
+        &self.code
+    }
+    pub fn local_code(&self) -> &str {
+        &self.local_code
+    }
+    pub fn name(&self) -> &str {
+        &self.name
+    }
+    pub fn continent(&self) -> &Continent {
+        &self.continent
+    }
+    pub fn iso_country(&self) -> &str {
+        &self.iso_country
+    }
+    pub fn wikipedia_link(&self) -> &str {
+        &self.wikipedia_link
+    }
+    pub fn keywords(&self) -> &Vec<String> {
+        &self.keywords
+    }
 }
 
 impl PartialEq for Region {
-    fn eq(&self, other: &Self) -> bool { self.id == other.id }
+    fn eq(&self, other: &Self) -> bool {
+        self.id == other.id
+    }
 }
 
 impl Eq for Region {}
 
 impl Ord for Region {
-    fn cmp(&self, other: &Self) -> Ordering { self.id.cmp(&other.id) }
+    fn cmp(&self, other: &Self) -> Ordering {
+        self.id.cmp(&other.id)
+    }
 }
 
 impl PartialOrd for Region {
-    fn partial_cmp(&self, other: &Self) -> Option<Ordering> { Some(self.cmp(other)) }
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        Some(self.cmp(other))
+    }
 }
 
 impl Hash for Region {
-    fn hash<H: Hasher>(&self, state: &mut H) { self.id.hash(state); }
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.id.hash(state);
+    }
 }
 
 impl ToJsonString for Region {}

@@ -9,7 +9,7 @@ pub enum NavaidType {
     Tacan,
     Vor,
     VorDme,
-    Vortac
+    Vortac,
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -19,7 +19,7 @@ pub enum UsageType {
     Lo,
     Both,
     Term,
-    Rnav
+    Rnav,
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
@@ -28,5 +28,5 @@ pub enum NavaidPower {
     Low,
     Medium,
     High,
-    Unknown
+    Unknown,
 }

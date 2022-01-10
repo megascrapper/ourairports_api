@@ -1,7 +1,7 @@
-use actix_web::{get, web, HttpResponse, Responder};
-use ourairports_api::ourairports::Id;
-use ourairports_api::ourairports::countries::Country;
 use super::{AppState, ErrorResponse};
+use actix_web::{get, web, HttpResponse, Responder};
+use ourairports_api::ourairports::countries::Country;
+use ourairports_api::ourairports::Id;
 
 #[get("/api/v1/countries")]
 pub async fn get_countries(data: web::Data<AppState>) -> impl Responder {

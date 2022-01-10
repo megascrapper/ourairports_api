@@ -21,7 +21,7 @@ pub struct Country {
 }
 
 impl Country {
-    pub fn id(&self) -> &str { &self.id }
+    pub fn id(&self) -> Id { self.id }
     pub fn code(&self) -> &str { &self.code }
     pub fn name(&self) -> &str { &self.name }
     pub fn continent(&self) -> &Continent { &self.continent }

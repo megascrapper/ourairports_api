@@ -1,4 +1,3 @@
-use std::fmt::{Display, Formatter, write};
 use error_chain::error_chain;
 use serde::{Serialize, Deserialize, Deserializer};
 use serde::de::{self, Unexpected};
@@ -10,7 +9,7 @@ pub mod navaids;
 pub mod countries;
 pub mod regions;
 
-pub type Id = String;
+pub type Id = u64;
 
 error_chain! {
     foreign_links {

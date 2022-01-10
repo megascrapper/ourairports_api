@@ -10,7 +10,7 @@ pub async fn get_countries(data: web::Data<AppState>) -> impl Responder {
 }
 
 #[get("/api/v1/countries/{id}")]
-pub async fn get_countries_by_id(web::Path(id): web::Path<Id>, data: web::Data<AppState>) -> impl Responder {
+pub async fn get_countries_by_id(id: web::Path<Id>, data: web::Data<AppState>) -> impl Responder {
     if let Some(item) = data.countries.get(&id) {
         HttpResponse::Ok().json(item)
     } else {

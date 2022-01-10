@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use actix_web::{get, HttpResponse, Responder};
 use serde::Serialize;
-use ourairports_api::ourairports::countries::Country;
+use ourairports_api::ourairports::countries::{Country, get_countries_csv};
 use ourairports_api::ourairports::Id;
 
 pub mod countries;
@@ -14,6 +14,14 @@ pub async fn index() -> impl Responder {
 
 pub struct AppState {
     pub countries: HashMap<Id, Country>
+}
+
+impl AppState {
+    pub fn new() -> ourairports_api::ourairports::Result<Self> {
+        Ok(AppState {
+            countries: get_countries_csv()?
+        })
+    }
 }
 
 #[derive(Serialize)]

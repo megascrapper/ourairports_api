@@ -81,10 +81,10 @@ pub fn get_regions_csv() -> crate::ourairports::Result<BTreeMap<Id, Region>> {
     let content = crate::web_request_blocking(REGIONS_CSV_URL)?;
     // initialise csv reader & return value
     let mut rdr = csv::Reader::from_reader(content.as_bytes());
-    let mut country_map = BTreeMap::new();
+    let mut map = BTreeMap::new();
     for result in rdr.deserialize() {
         let record: Region = result?;
-        country_map.insert(record.id().to_owned(), record);
+        map.insert(record.id().to_owned(), record);
     }
-    Ok(country_map)
+    Ok(map)
 }

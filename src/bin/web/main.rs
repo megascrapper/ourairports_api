@@ -2,6 +2,7 @@ use crate::pages::airport_frequencies::*;
 use crate::pages::airports::*;
 use crate::pages::countries::*;
 use crate::pages::regions::*;
+use crate::pages::runways::*;
 use crate::pages::{index, AppState};
 use actix_web::{middleware, App, HttpServer};
 
@@ -18,6 +19,8 @@ async fn main() -> std::io::Result<()> {
             .service(get_airports_by_id)
             .service(get_airport_frequencies)
             .service(get_airport_frequencies_by_id)
+            .service(get_runways)
+            .service(get_runways_by_id)
             .service(get_countries)
             .service(get_countries_by_id)
             .service(get_regions)

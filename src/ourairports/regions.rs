@@ -84,7 +84,7 @@ pub fn get_regions_csv() -> crate::ourairports::Result<BTreeMap<Id, Region>> {
     let mut map = BTreeMap::new();
     for result in rdr.deserialize() {
         let record: Region = result?;
-        map.insert(record.id().to_owned(), record);
+        map.insert(record.id(), record);
     }
     Ok(map)
 }

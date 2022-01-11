@@ -133,7 +133,7 @@ pub fn get_runways_csv() -> crate::ourairports::Result<BTreeMap<Id, Runway>> {
     let mut map = BTreeMap::new();
     for result in rdr.deserialize() {
         let record: Runway = result?;
-        map.insert(record.id().to_owned(), record);
+        map.insert(record.id(), record);
     }
     Ok(map)
 }

@@ -11,9 +11,11 @@ mod pages;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    let app_state = AppState::new().expect("error fetching OurAirports data");
+
     HttpServer::new(move || {
         App::new()
-            .data(AppState::new().expect("error fetching OurAirports data"))
+            .data(app_state.clone())
             .wrap(middleware::Compress::default()) // to enable compression
             .service(index)
             .service(get_airports)

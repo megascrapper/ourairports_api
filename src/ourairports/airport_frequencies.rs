@@ -75,7 +75,7 @@ pub fn get_airport_frequencies_csv() -> crate::ourairports::Result<BTreeMap<Id, 
     let mut map = BTreeMap::new();
     for result in rdr.deserialize() {
         let record: AirportFrequency = result?;
-        map.insert(record.id().to_owned(), record);
+        map.insert(record.id(), record);
     }
     Ok(map)
 }

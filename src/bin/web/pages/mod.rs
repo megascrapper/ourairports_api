@@ -24,6 +24,7 @@ pub async fn index() -> impl Responder {
     HttpResponse::Ok().body("<h1>OurAirports API</h1>")
 }
 
+#[derive(Clone)]
 pub struct AppState {
     pub airports: BTreeMap<Id, Airport>,
     pub airport_frequencies: BTreeMap<Id, AirportFrequency>,

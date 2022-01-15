@@ -1,8 +1,12 @@
 //! Contains all of the OurAirports data types and its associated enums and functions.
+//!
+//! # Credits
+//! The descriptions for many of the fields and enum variants is adapted from the OurAirports
+//! [data dictionary](https://ourairports.com/help/data-dictionary.html) and
+//! [map legend](https://ourairports.com/help/#legend)
 
 use serde::de::{self, Unexpected};
 use serde::{Deserialize, Deserializer, Serialize};
-use std::fmt::{write, Display, Formatter};
 
 pub mod airport_frequencies;
 pub mod airports;

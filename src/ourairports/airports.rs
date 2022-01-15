@@ -1,5 +1,6 @@
-//! Contains the type representing a single airport as well as enums of possible airport types. Also
-//! contains a function to get airports data from OurAirports.
+//! Contains the type representing a single airport as well as enums of possible airport types.
+//!
+//! Also contains a function to get airports data from OurAirports.
 //!
 //! # Examples
 //! ```
@@ -10,6 +11,7 @@
 //!
 //!     // London Heathrow Airport (ICAO: EGLL, IATA: LHR)
 //!     let heathrow_airport = airports.get(&2434).unwrap();
+//!     assert_eq!(2434, heathrow_airport.id());
 //!     assert_eq!("EGLL", heathrow_airport.ident());
 //!     assert_eq!("LHR", heathrow_airport.iata_code());
 //!     assert_eq!(AirportType::LargeAirport, heathrow_airport.airport_type());
@@ -60,9 +62,15 @@ pub struct Airport {
 }
 
 impl Airport {
+    /// Internal OurAirports integer identifier for the airport. This will stay persistent, even if
+    /// the airport code changes.
     pub fn id(&self) -> Id {
         self.id
     }
+    /// The text identifier used in the OurAirports URL. This will be the ICAO code if available.
+    /// Otherwise, it will be a local airport code (if no conflict), or if nothing else is
+    /// available, an internally-generated code starting with the ISO2 country code, followed by a
+    /// dash and a four-digit number.
     pub fn ident(&self) -> &str {
         &self.ident
     }
@@ -70,48 +78,75 @@ impl Airport {
     pub fn airport_type(&self) -> &str {
         &self.airport_type
     }
+    /// The official airport name, including "Airport", "Airstrip", etc.
     pub fn name(&self) -> &str {
         &self.name
     }
+    /// The airport latitude in decimal degrees (positive for north).
     pub fn latitude_deg(&self) -> f64 {
         self.latitude_deg
     }
+    /// The airport longitude in decimal degrees (positive for east).
     pub fn longitude_deg(&self) -> f64 {
         self.longitude_deg
     }
+    /// The airport elevation above MSL in feet (negative for altitude below MSL).
     pub fn elevation_ft(&self) -> Option<i32> {
         self.elevation_ft
     }
+    /// The continent where the airport is located. See [`Continent`] for possible values.
     pub fn continent(&self) -> &Continent {
         &self.continent
     }
+    /// The two-character [ISO 3166:1-alpha2 code](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
+    /// for the country where the airport is (primarily) located. A handful of unofficial, non-ISO
+    /// codes are also in use, such as "XK" for Kosovo. The values corresponds to [`Country.code`](../countries/struct.Country.html#method.code)
     pub fn iso_country(&self) -> &str {
         &self.iso_country
     }
+    /// An alphanumeric code for the high-level administrative subdivision of a country where the
+    /// airport is primarily located (e.g. province, governorate), prefixed by the ISO2 country code
+    /// and a hyphen. [ISO 3166:2](https://en.wikipedia.org/wiki/ISO_3166-2) codes are used whenever
+    /// possible, preferring higher administrative levels, but some custom codes are also present.
     pub fn iso_region(&self) -> &str {
         &self.iso_region
     }
+    /// The primary municipality that the airport serves (when available).
+    /// Note that this is not necessarily the municipality where the airport is physically located.
     pub fn municipality(&self) -> &str {
         &self.municipality
     }
+    /// `true` if the airport currently has scheduled airline service; `false` otherwise.
     pub fn scheduled_service(&self) -> bool {
         self.scheduled_service
     }
+    /// The code that an aviation GPS database (such as Jeppesen's or Garmin's) would normally use
+    /// for the airport. This will always be the [ICAO code](https://en.wikipedia.org/wiki/ICAO_airport_code)
+    /// if one exists.
     pub fn gps_code(&self) -> &str {
         &self.gps_code
     }
+    /// The three-letter [IATA code](https://en.wikipedia.org/wiki/International_Air_Transport_Association_code)
+    /// for the airport (if it has one).
     pub fn iata_code(&self) -> &str {
         &self.iata_code
     }
+    /// The local country code for the airport, if different from the [`gps_code`](self.gps_code()) and
+    /// [`iata_code`](self.iata_code()) fields (used mainly for US airports).
     pub fn local_code(&self) -> &str {
         &self.local_code
     }
+    /// URL of the airport's official home page on the web, if one exists.
     pub fn home_link(&self) -> &str {
         &self.home_link
     }
+    /// URL of the airport's page on Wikipedia, if one exists.
     pub fn wikipedia_link(&self) -> &str {
         &self.wikipedia_link
     }
+    /// Extra keywords/phrases to assist with search. May include former names for the airport,
+    /// alternate codes, names in other languages, nearby tourist destinations, etc. Each item
+    /// represents one keyword.
     pub fn keywords(&self) -> &Vec<String> {
         &self.keywords
     }
@@ -170,8 +205,8 @@ pub enum AirportType {
 /// with its ID as the key, sorted according to its keys.
 ///
 /// # Errors
-/// Returns [`crate::ourairports::FetchError`] if the data cannot be fetched or there's something wrong
-/// with the serialization process.
+/// Returns [`FetchError`] if the data cannot be fetched or there's something wrong
+/// with the de serialization process.
 pub fn get_airports_csv() -> Result<BTreeMap<Id, Airport>, FetchError> {
     // get data
     let content = crate::web_request_blocking(AIRPORTS_CSV_URL)?;

@@ -7,9 +7,6 @@ use ourairports_api::ourairports::Id;
 
 use super::{AppState, ErrorResponse};
 
-// TODO: query params:
-// airport_ref
-// airport_ident
 #[derive(Deserialize)]
 pub struct QueryParams {
     pub airport_ref: Option<Id>,

@@ -7,7 +7,7 @@ use ourairports_api::ourairports::countries::{get_countries_csv, Country};
 use ourairports_api::ourairports::navaids::{get_navaids_csv, Navaid};
 use ourairports_api::ourairports::regions::{get_regions_csv, Region};
 use ourairports_api::ourairports::runways::{get_runways_csv, Runway};
-use ourairports_api::ourairports::Id;
+use ourairports_api::ourairports::{FetchError, Id};
 use serde::Serialize;
 use std::collections::BTreeMap;
 
@@ -35,7 +35,7 @@ pub struct AppState {
 }
 
 impl AppState {
-    pub fn new() -> ourairports_api::ourairports::Result<Self> {
+    pub fn new() -> Result<Self, FetchError> {
         Ok(AppState {
             airports: get_airports_csv()?,
             airport_frequencies: get_airport_frequencies_csv()?,

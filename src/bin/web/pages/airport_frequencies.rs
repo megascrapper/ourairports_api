@@ -1,6 +1,6 @@
 use std::collections::BTreeSet;
 
-use actix_web::{get, HttpResponse, Responder, web};
+use actix_web::{get, web, HttpResponse, Responder};
 use serde::Deserialize;
 
 use ourairports_api::ourairports::airport_frequencies::AirportFrequency;
@@ -11,11 +11,14 @@ use super::{AppState, ErrorResponse};
 #[derive(Deserialize)]
 pub struct QueryParams {
     pub airport_ref: Option<Id>,
-    pub airport_ident: Option<String>
+    pub airport_ident: Option<String>,
 }
 
 #[get("/api/v1/airport-frequencies")]
-pub async fn get_airport_frequencies(data: web::Data<AppState>, params: web::Query<QueryParams>) -> impl Responder {
+pub async fn get_airport_frequencies(
+    data: web::Data<AppState>,
+    params: web::Query<QueryParams>,
+) -> impl Responder {
     if params.airport_ref.is_some() || params.airport_ident.is_some() {
         let mut body = BTreeSet::new();
         for freq in data.airport_frequencies.values() {

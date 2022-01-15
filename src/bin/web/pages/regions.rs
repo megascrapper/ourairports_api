@@ -1,10 +1,10 @@
 use std::collections::BTreeSet;
 
-use actix_web::{get, HttpResponse, Responder, web};
+use actix_web::{get, web, HttpResponse, Responder};
 use serde::Deserialize;
 
-use ourairports_api::ourairports::Id;
 use ourairports_api::ourairports::regions::Region;
+use ourairports_api::ourairports::Id;
 
 use super::{AppState, ErrorResponse};
 
@@ -16,7 +16,10 @@ pub struct QueryParams {
 }
 
 #[get("/api/v1/regions")]
-pub async fn get_regions(data: web::Data<AppState>, params: web::Query<QueryParams>) -> impl Responder {
+pub async fn get_regions(
+    data: web::Data<AppState>,
+    params: web::Query<QueryParams>,
+) -> impl Responder {
     if params.iso_country.is_some() || params.code.is_some() || params.local_code.is_some() {
         let mut body = BTreeSet::new();
         for region in data.regions.values() {

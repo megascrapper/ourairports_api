@@ -1,4 +1,4 @@
-use crate::ourairports::{Id, ToJsonString};
+use crate::ourairports::{FetchError, Id, ToJsonString};
 use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::BTreeMap;
@@ -84,7 +84,9 @@ impl Navaid {
     pub fn magnetic_variation_deg(&self) -> Option<f64> {
         self.magnetic_variation_deg
     }
-    pub fn usage_type(&self) -> Option<&UsageType> { self.usage_type.as_ref() }
+    pub fn usage_type(&self) -> Option<&UsageType> {
+        self.usage_type.as_ref()
+    }
     pub fn power(&self) -> Option<&NavaidPower> {
         self.power.as_ref()
     }
@@ -153,7 +155,7 @@ pub enum NavaidPower {
     Unknown,
 }
 
-pub fn get_navaids_csv() -> crate::ourairports::Result<BTreeMap<Id, Navaid>> {
+pub fn get_navaids_csv() -> Result<BTreeMap<Id, Navaid>, FetchError> {
     // get data
     let content = crate::web_request_blocking(NAVAIDS_CSV_URL)?;
     // initialise csv reader & return value

@@ -4,7 +4,7 @@ use std::hash::{Hash, Hasher};
 
 use serde::{Deserialize, Serialize};
 
-use crate::ourairports::{vec_string_from_string, Continent, Id, ToJsonString};
+use crate::ourairports::{vec_string_from_string, Continent, FetchError, Id, ToJsonString};
 
 const REGIONS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/regions.csv";
 
@@ -76,7 +76,7 @@ impl Hash for Region {
 
 impl ToJsonString for Region {}
 
-pub fn get_regions_csv() -> crate::ourairports::Result<BTreeMap<Id, Region>> {
+pub fn get_regions_csv() -> Result<BTreeMap<Id, Region>, FetchError> {
     // get data
     let content = crate::web_request_blocking(REGIONS_CSV_URL)?;
     // initialise csv reader & return value

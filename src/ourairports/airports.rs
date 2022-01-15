@@ -24,7 +24,9 @@ use std::hash::{Hash, Hasher};
 
 use serde::{Deserialize, Serialize};
 
-use crate::ourairports::{bool_from_str, vec_string_from_string, Continent, Id, ToJsonString};
+use crate::ourairports::{
+    bool_from_str, vec_string_from_string, Continent, FetchError, Id, ToJsonString,
+};
 
 const AIRPORTS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/airports.csv";
 
@@ -168,9 +170,9 @@ pub enum AirportType {
 /// with its ID as the key, sorted according to its keys.
 ///
 /// # Errors
-/// Returns [`crate::ourairports::Error`] if the data cannot be fetched or there's something wrong
+/// Returns [`crate::ourairports::FetchError`] if the data cannot be fetched or there's something wrong
 /// with the serialization process.
-pub fn get_airports_csv() -> crate::ourairports::Result<BTreeMap<Id, Airport>> {
+pub fn get_airports_csv() -> Result<BTreeMap<Id, Airport>, FetchError> {
     // get data
     let content = crate::web_request_blocking(AIRPORTS_CSV_URL)?;
     // initialise csv reader & return value

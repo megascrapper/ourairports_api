@@ -1,10 +1,10 @@
 use std::collections::BTreeSet;
 
-use actix_web::{get, HttpResponse, Responder, web};
+use actix_web::{get, web, HttpResponse, Responder};
 use serde::Deserialize;
 
-use ourairports_api::ourairports::Id;
 use ourairports_api::ourairports::navaids::Navaid;
+use ourairports_api::ourairports::Id;
 
 use super::{AppState, ErrorResponse};
 
@@ -17,8 +17,15 @@ pub struct QueryParams {
 }
 
 #[get("/api/v1/navaids")]
-pub async fn get_navaids(data: web::Data<AppState>, params: web::Query<QueryParams>) -> impl Responder {
-    if params.filename.is_some() || params.ident.is_some() || params.iso_country.is_some() || params.associated_airport.is_some() {
+pub async fn get_navaids(
+    data: web::Data<AppState>,
+    params: web::Query<QueryParams>,
+) -> impl Responder {
+    if params.filename.is_some()
+        || params.ident.is_some()
+        || params.iso_country.is_some()
+        || params.associated_airport.is_some()
+    {
         let mut body = BTreeSet::new();
         for navaid in data.navaids.values() {
             if let Some(filename) = &params.filename {
@@ -37,7 +44,9 @@ pub async fn get_navaids(data: web::Data<AppState>, params: web::Query<QueryPara
                 }
             }
             if let Some(associated_airport) = &params.associated_airport {
-                if associated_airport.to_ascii_lowercase() == navaid.associated_airport().to_ascii_lowercase() {
+                if associated_airport.to_ascii_lowercase()
+                    == navaid.associated_airport().to_ascii_lowercase()
+                {
                     body.insert(navaid);
                 }
             }

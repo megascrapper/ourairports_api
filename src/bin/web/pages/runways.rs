@@ -1,6 +1,6 @@
-use std::collections::BTreeSet;
 use actix_web::{get, web, HttpResponse, Responder};
 use serde::Deserialize;
+use std::collections::BTreeSet;
 
 use ourairports_api::ourairports::runways::Runway;
 use ourairports_api::ourairports::Id;
@@ -27,7 +27,8 @@ pub async fn get_runways(
                 }
             }
             if let Some(airport_ident) = &params.airport_ident {
-                if airport_ident.to_ascii_lowercase() == runway.airport_ident().to_ascii_lowercase() {
+                if airport_ident.to_ascii_lowercase() == runway.airport_ident().to_ascii_lowercase()
+                {
                     body.insert(runway);
                 }
             }

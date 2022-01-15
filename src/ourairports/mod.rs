@@ -1,8 +1,8 @@
 //! Contains all of the OurAirports data types and its associated enums and functions.
 
-use error_chain::error_chain;
 use serde::de::{self, Unexpected};
 use serde::{Deserialize, Deserializer, Serialize};
+use std::fmt::{write, Display, Formatter};
 
 pub mod airport_frequencies;
 pub mod airports;
@@ -14,11 +14,12 @@ pub mod runways;
 /// Type of all ID fields.
 pub type Id = u64;
 
-error_chain! {
-    foreign_links {
-        Reqwest(reqwest::Error);
-        Csv(csv::Error);
-    }
+#[derive(thiserror::Error, Debug)]
+pub enum FetchError {
+    #[error("Network error: {0}")]
+    NetworkError(#[from] reqwest::Error),
+    #[error("Error in deserializing: {0}")]
+    DeserializeError(#[from] csv::Error),
 }
 
 /// List of allowed continent values.
@@ -60,7 +61,7 @@ pub trait ToJsonString {
 }
 
 /// Converts a string to a boolean based on "yes" and "no"
-fn bool_from_str<'de, D>(deserializer: D) -> std::result::Result<bool, D::Error>
+fn bool_from_str<'de, D>(deserializer: D) -> Result<bool, D::Error>
 where
     D: Deserializer<'de>,
 {
@@ -75,7 +76,7 @@ where
 }
 
 /// Transforms a comma-separated string to a vector.
-fn vec_string_from_string<'de, D>(deserializer: D) -> std::result::Result<Vec<String>, D::Error>
+fn vec_string_from_string<'de, D>(deserializer: D) -> Result<Vec<String>, D::Error>
 where
     D: Deserializer<'de>,
 {

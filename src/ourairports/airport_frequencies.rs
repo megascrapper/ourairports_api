@@ -1,4 +1,4 @@
-use crate::ourairports::{Id, ToJsonString};
+use crate::ourairports::{FetchError, Id, ToJsonString};
 use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::BTreeMap;
@@ -67,7 +67,7 @@ impl Hash for AirportFrequency {
 
 impl ToJsonString for AirportFrequency {}
 
-pub fn get_airport_frequencies_csv() -> crate::ourairports::Result<BTreeMap<Id, AirportFrequency>> {
+pub fn get_airport_frequencies_csv() -> Result<BTreeMap<Id, AirportFrequency>, FetchError> {
     // get data
     let content = crate::web_request_blocking(AIRPORT_FREQUENCIES_CSV_URL)?;
     // initialise csv reader & return value

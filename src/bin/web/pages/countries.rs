@@ -1,9 +1,12 @@
-use super::{AppState, ErrorResponse};
+use std::collections::BTreeSet;
+
 use actix_web::{get, web, HttpResponse, Responder};
+use serde::Deserialize;
+
 use ourairports_api::ourairports::countries::Country;
 use ourairports_api::ourairports::Id;
-use serde::Deserialize;
-use std::collections::BTreeSet;
+
+use super::{AppState, ErrorResponse};
 
 #[derive(Deserialize)]
 pub struct QueryParams {
@@ -18,23 +21,21 @@ pub async fn get_countries(
 ) -> impl Responder {
     if params.name.is_some() || params.code.is_some() {
         let mut body = BTreeSet::new();
-        if let Some(name) = &params.name {
-            for country in data.countries.values() {
+        for country in data.countries.values() {
+            if let Some(name) = &params.name {
                 if name.to_ascii_lowercase() == country.name().to_ascii_lowercase() {
                     body.insert(country);
                 }
             }
-        }
-        if let Some(code) = &params.code {
-            for country in data.countries.values() {
+            if let Some(code) = &params.code {
                 if code.to_ascii_lowercase() == country.code().to_ascii_lowercase() {
                     body.insert(country);
                 }
             }
         }
-        HttpResponse::Ok().json(&body)
+        HttpResponse::Ok().json(body)
     } else {
-        let body = &data.countries.values().collect::<Vec<&Country>>();
+        let body = data.countries.values().collect::<Vec<&Country>>();
         HttpResponse::Ok().json(body)
     }
 }

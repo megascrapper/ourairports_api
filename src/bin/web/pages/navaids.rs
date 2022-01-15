@@ -3,6 +3,11 @@ use actix_web::{get, web, HttpResponse, Responder};
 use ourairports_api::ourairports::navaids::Navaid;
 use ourairports_api::ourairports::Id;
 
+// TODO: query params:
+// ident
+// name
+// iso_country
+
 #[get("/api/v1/navaids")]
 pub async fn get_navaids(data: web::Data<AppState>) -> impl Responder {
     let body = &data.navaids.values().collect::<Vec<&Navaid>>();

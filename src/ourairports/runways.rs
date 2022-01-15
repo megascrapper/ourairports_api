@@ -1,4 +1,4 @@
-use crate::ourairports::{bool_from_str, Continent, Id, ToJsonString};
+use crate::ourairports::{bool_from_str, Id, ToJsonString};
 use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::BTreeMap;

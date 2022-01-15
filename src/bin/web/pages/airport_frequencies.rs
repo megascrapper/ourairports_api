@@ -3,6 +3,10 @@ use actix_web::{get, web, HttpResponse, Responder};
 use ourairports_api::ourairports::airport_frequencies::AirportFrequency;
 use ourairports_api::ourairports::Id;
 
+// TODO: query params:
+// airport_ref
+// airport_ident
+
 #[get("/api/v1/airport-frequencies")]
 pub async fn get_airport_frequencies(data: web::Data<AppState>) -> impl Responder {
     let body = &data

@@ -27,7 +27,7 @@ pub struct Navaid {
     slaved_variation_deg: Option<f64>,
     magnetic_variation_deg: Option<f64>,
     #[serde(rename = "usageType")]
-    usage_type: String,
+    usage_type: Option<UsageType>,
     power: Option<NavaidPower>,
     associated_airport: String,
 }
@@ -84,11 +84,9 @@ impl Navaid {
     pub fn magnetic_variation_deg(&self) -> Option<f64> {
         self.magnetic_variation_deg
     }
-    pub fn usage_type(&self) -> &str {
-        &self.usage_type
-    }
-    pub fn power(&self) -> &Option<NavaidPower> {
-        &self.power
+    pub fn usage_type(&self) -> Option<&UsageType> { self.usage_type.as_ref() }
+    pub fn power(&self) -> Option<&NavaidPower> {
+        self.power.as_ref()
     }
     pub fn associated_airport(&self) -> &str {
         &self.associated_airport
@@ -141,6 +139,7 @@ pub enum UsageType {
     Hi,
     Lo,
     Both,
+    #[serde(alias = "TERMINAL")]
     Term,
     Rnav,
 }

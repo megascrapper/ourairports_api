@@ -3,6 +3,12 @@ use actix_web::{get, web, HttpResponse, Responder};
 use ourairports_api::ourairports::regions::Region;
 use ourairports_api::ourairports::Id;
 
+// TODO: query params:
+// code
+// local_code
+// iso_country
+// name
+
 #[get("/api/v1/regions")]
 pub async fn get_regions(data: web::Data<AppState>) -> impl Responder {
     let body = &data.regions.values().collect::<Vec<&Region>>();

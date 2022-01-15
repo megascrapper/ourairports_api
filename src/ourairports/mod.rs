@@ -1,3 +1,5 @@
+//! Contains all of the OurAirports data types and its associated enums and functions.
+
 use error_chain::error_chain;
 use serde::de::{self, Unexpected};
 use serde::{Deserialize, Deserializer, Serialize};
@@ -9,6 +11,7 @@ pub mod navaids;
 pub mod regions;
 pub mod runways;
 
+/// Type of all ID fields.
 pub type Id = u64;
 
 error_chain! {
@@ -37,7 +40,9 @@ pub enum Continent {
     SouthAmerica,
 }
 
+/// Trait for converting OurAirports data into JSON.
 pub trait ToJsonString {
+    /// Serialize an OurAirports data to string of JSON.
     fn to_json_string(&self) -> serde_json::Result<String>
     where
         Self: serde::Serialize,
@@ -45,6 +50,7 @@ pub trait ToJsonString {
         serde_json::to_string(&self)
     }
 
+    /// Serialize an OurAirports data to string of JSON with pretty printing.
     fn to_json_string_pretty(&self) -> serde_json::Result<String>
     where
         Self: serde::Serialize,

@@ -1,3 +1,23 @@
+//! Contains the type representing a single airport as well as enums of possible airport types. Also
+//! contains a function to get airports data from OurAirports.
+//!
+//! # Examples
+//! ```
+//! use ourairports_api::ourairports::airports::*;
+//!
+//! # fn main() -> Result<(), Box<dyn std::error::Error>> {
+//!     let airports = get_airports_csv()?;
+//!
+//!     // London Heathrow Airport (ICAO: EGLL, IATA: LHR)
+//!     let heathrow_airport = airports.get(&2434).unwrap();
+//!     assert_eq!("EGLL", heathrow_airport.ident());
+//!     assert_eq!("LHR", heathrow_airport.iata_code());
+//!     assert_eq!(AirportType::LargeAirport, heathrow_airport.airport_type());
+//!
+//! #    Ok(())
+//! # }
+//! ```
+
 use std::cmp::Ordering;
 use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
@@ -8,6 +28,10 @@ use crate::ourairports::{bool_from_str, vec_string_from_string, Continent, Id, T
 
 const AIRPORTS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/airports.csv";
 
+/// Represents a single airport in the OurAirports data.
+///
+/// See the [OurAirports data dictionary](https://ourairports.com/help/data-dictionary.html#airports)
+/// for more information of each field.
 #[derive(Deserialize, Debug, Clone, Serialize)]
 pub struct Airport {
     id: Id,
@@ -40,6 +64,7 @@ impl Airport {
     pub fn ident(&self) -> &str {
         &self.ident
     }
+    /// The type of the airport. See [`AirportType`] for available values.
     pub fn airport_type(&self) -> &str {
         &self.airport_type
     }
@@ -118,17 +143,33 @@ impl Hash for Airport {
 
 impl ToJsonString for Airport {}
 
+/// Possible types of airports.
+///
+/// See [OurAirports map legend](https://ourairports.com/help/data-dictionary.html#airports)
+/// for more information of each variant.
 #[derive(Deserialize, Serialize, Debug, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[serde(rename_all = "snake_case")]
 pub enum AirportType {
+    /// Small airport
     SmallAirport,
+    /// Medium airport
     MediumAirport,
+    /// Large airport
     LargeAirport,
+    /// Heliport
     Heliport,
+    /// Seaplane base
     SeaplaneBase,
+    /// Closed airport
     ClosedAirport,
 }
 
+/// Returns a [`BTreeMap`] of all [`Airport`] in the latest OurAirports `airports.csv`
+/// with its ID as the key, sorted according to its keys.
+///
+/// # Errors
+/// Returns [`crate::ourairports::Error`] if the data cannot be fetched or there's something wrong
+/// with the serialization process.
 pub fn get_airports_csv() -> crate::ourairports::Result<BTreeMap<Id, Airport>> {
     // get data
     let content = crate::web_request_blocking(AIRPORTS_CSV_URL)?;

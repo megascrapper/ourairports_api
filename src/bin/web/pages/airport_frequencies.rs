@@ -32,7 +32,7 @@ pub async fn get_airport_frequencies(data: web::Data<AppState>, params: web::Que
         }
         HttpResponse::Ok().json(body)
     } else {
-        let body = &data
+        let body = data
             .airport_frequencies
             .values()
             .collect::<Vec<&AirportFrequency>>();

@@ -44,7 +44,7 @@ pub async fn get_navaids(data: web::Data<AppState>, params: web::Query<QueryPara
         }
         HttpResponse::Ok().json(body)
     } else {
-        let body = &data.navaids.values().collect::<Vec<&Navaid>>();
+        let body = data.navaids.values().collect::<Vec<&Navaid>>();
         HttpResponse::Ok().json(body)
     }
 }

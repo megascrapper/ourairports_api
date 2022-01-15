@@ -34,7 +34,7 @@ pub async fn get_runways(
         }
         HttpResponse::Ok().json(body)
     } else {
-        let body = &data.runways.values().collect::<Vec<&Runway>>();
+        let body = data.runways.values().collect::<Vec<&Runway>>();
         HttpResponse::Ok().json(body)
     }
 }

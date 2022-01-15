@@ -3,6 +3,7 @@ use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
 
 use serde::{Deserialize, Serialize};
+use log::debug;
 
 use crate::ourairports::{vec_string_from_string, Continent, FetchError, Id, ToJsonString};
 
@@ -73,9 +74,12 @@ impl ToJsonString for Country {}
 /// struct as value
 pub fn get_countries_csv() -> Result<BTreeMap<Id, Country>, FetchError> {
     // get data
+    debug!("getting countries data");
     let content = crate::web_request_blocking(COUNTRIES_CSV_URL)?;
     // initialise csv reader & return value
+    debug!("initialising CSV reader");
     let mut rdr = csv::Reader::from_reader(content.as_bytes());
+    debug!("parsing and deserializing country data");
     let mut map = BTreeMap::new();
     for result in rdr.deserialize() {
         let record: Country = result?;

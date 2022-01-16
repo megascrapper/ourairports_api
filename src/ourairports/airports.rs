@@ -14,7 +14,7 @@
 //!     assert_eq!(2434, heathrow_airport.id());
 //!     assert_eq!("EGLL", heathrow_airport.ident());
 //!     assert_eq!("LHR", heathrow_airport.iata_code());
-//!     assert_eq!(AirportType::LargeAirport, heathrow_airport.airport_type());
+//!     assert_eq!(&AirportType::LargeAirport, heathrow_airport.airport_type());
 //!
 //! #    Ok(())
 //! # }
@@ -42,7 +42,7 @@ pub struct Airport {
     id: Id,
     ident: String,
     #[serde(rename = "type")]
-    airport_type: String,
+    airport_type: AirportType,
     name: String,
     latitude_deg: f64,
     longitude_deg: f64,
@@ -68,7 +68,9 @@ impl Airport {
     pub fn id(&self) -> Id {
         self.id
     }
-    /// The text identifier used in the OurAirports URL. This will be the ICAO code if available.
+    /// The text identifier used in the OurAirports URL.
+    ///
+    /// This will be the ICAO code if available.
     /// Otherwise, it will be a local airport code (if no conflict), or if nothing else is
     /// available, an internally-generated code starting with the ISO2 country code, followed by a
     /// dash and a four-digit number.
@@ -76,7 +78,7 @@ impl Airport {
         &self.ident
     }
     /// The type of the airport. See [`AirportType`] for available values.
-    pub fn airport_type(&self) -> &str {
+    pub fn airport_type(&self) -> &AirportType {
         &self.airport_type
     }
     /// The official airport name, including "Airport", "Airstrip", etc.

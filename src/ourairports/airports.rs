@@ -23,6 +23,7 @@
 use std::cmp::Ordering;
 use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
+use log::debug;
 
 use serde::{Deserialize, Serialize};
 
@@ -209,9 +210,12 @@ pub enum AirportType {
 /// with the de serialization process.
 pub fn get_airports_csv() -> Result<BTreeMap<Id, Airport>, FetchError> {
     // get data
+    debug!("getting data");
     let content = crate::web_request_blocking(AIRPORTS_CSV_URL)?;
     // initialise csv reader & return value
+    debug!("initialising CSV reader");
     let mut rdr = csv::Reader::from_reader(content.as_bytes());
+    debug!("parsing and deserializing data");
     let mut map = BTreeMap::new();
     for result in rdr.deserialize() {
         let record: Airport = result?;

@@ -1,6 +1,7 @@
 use std::cmp::Ordering;
 use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
+use log::debug;
 
 use serde::{Deserialize, Serialize};
 
@@ -78,9 +79,12 @@ impl ToJsonString for Region {}
 
 pub fn get_regions_csv() -> Result<BTreeMap<Id, Region>, FetchError> {
     // get data
+    debug!("getting data");
     let content = crate::web_request_blocking(REGIONS_CSV_URL)?;
     // initialise csv reader & return value
+    debug!("initialising CSV reader");
     let mut rdr = csv::Reader::from_reader(content.as_bytes());
+    debug!("parsing and deserializing data");
     let mut map = BTreeMap::new();
     for result in rdr.deserialize() {
         let record: Region = result?;

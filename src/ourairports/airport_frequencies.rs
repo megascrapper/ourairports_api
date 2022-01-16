@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
+use log::debug;
 
 const AIRPORT_FREQUENCIES_CSV_URL: &str =
     "https://davidmegginson.github.io/ourairports-data/airport-frequencies.csv";
@@ -69,9 +70,12 @@ impl ToJsonString for AirportFrequency {}
 
 pub fn get_airport_frequencies_csv() -> Result<BTreeMap<Id, AirportFrequency>, FetchError> {
     // get data
+    debug!("getting data");
     let content = crate::web_request_blocking(AIRPORT_FREQUENCIES_CSV_URL)?;
     // initialise csv reader & return value
+    debug!("initialising reader");
     let mut rdr = csv::Reader::from_reader(content.as_bytes());
+    debug!("parsing and deserializing data");
     let mut map = BTreeMap::new();
     for result in rdr.deserialize() {
         let record: AirportFrequency = result?;

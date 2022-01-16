@@ -40,7 +40,8 @@ async fn main() -> std::io::Result<()> {
             .await
         }
         Err(e) => {
-            error!("fatal error: cannot fetch OurAirports data. stopping immediately",);
+            error!("{}", e);
+            error!("fatal error: cannot fetch OurAirports data. stopping immediately");
             panic!("cannot fetch OurAirports data: {}", e);
         },
     }

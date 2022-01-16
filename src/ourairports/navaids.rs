@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
+use log::debug;
 
 const NAVAIDS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/navaids.csv";
 
@@ -157,9 +158,12 @@ pub enum NavaidPower {
 
 pub fn get_navaids_csv() -> Result<BTreeMap<Id, Navaid>, FetchError> {
     // get data
+    debug!("getting data");
     let content = crate::web_request_blocking(NAVAIDS_CSV_URL)?;
     // initialise csv reader & return value
+    debug!("initialising CSV reader");
     let mut rdr = csv::Reader::from_reader(content.as_bytes());
+    debug!("parsing and deserializing data");
     let mut map = BTreeMap::new();
     for result in rdr.deserialize() {
         let record: Navaid = result?;

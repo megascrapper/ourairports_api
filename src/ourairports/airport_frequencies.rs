@@ -52,13 +52,15 @@ impl AirportFrequency {
     }
     /// Internal OurAirports integer identifier for the associated airport.
     ///
-    /// See also: [`Airport.id()`](../airports/struct.Airport.html#method.id)
+    /// See [`Airport.id()`](../airports/struct.Airport.html#method.id) for more information about
+    /// airport ID.
     pub fn airport_ref(&self) -> Id {
         self.airport_ref
     }
     /// The identifier of the associated airport for the frequency.
     ///
-    /// See also [`Airport.ident()`](../airports/struct.Airport.html#method.ident)
+    /// See [`Airport.ident()`](../airports/struct.Airport.html#method.ident) for more information
+    /// about airport identifiers.
     pub fn airport_ident(&self) -> &str {
         &self.airport_ident
     }

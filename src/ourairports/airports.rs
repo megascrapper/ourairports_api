@@ -102,8 +102,10 @@ impl Airport {
         &self.continent
     }
     /// The two-character [ISO 3166:1-alpha2 code](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
-    /// for the country where the airport is (primarily) located. A handful of unofficial, non-ISO
-    /// codes are also in use, such as "XK" for Kosovo. The values corresponds to [`Country.code`](../countries/struct.Country.html#method.code)
+    /// for the country where the airport is (primarily) located.
+    ///
+    /// A handful of unofficial, non-ISO codes are also in use, such as "XK" for Kosovo.
+    /// The values corresponds to [`Country.code`](../countries/struct.Country.html#method.code)
     pub fn iso_country(&self) -> &str {
         &self.iso_country
     }

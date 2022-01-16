@@ -201,7 +201,10 @@ pub enum AirportType {
     /// Seaplane base
     SeaplaneBase,
     /// Closed airport
+    #[serde(alias = "closed")]
     ClosedAirport,
+    #[serde(alias = "balloonport")]
+    BalloonPort // undocumented type?
 }
 
 /// Returns a [`BTreeMap`] of all [`Airport`] in the latest OurAirports `airports.csv`

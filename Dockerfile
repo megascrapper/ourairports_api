@@ -1,12 +1,13 @@
 # build the web app
-FROM rust:alpine AS builder
-RUN apk add --no-cache musl-dev pkgconfig openssl-dev
+FROM rust:1 AS builder
 WORKDIR /ourairports_api
 COPY . .
-RUN cargo build --target x86_64-unknown-linux-musl --bin web
+RUN cargo build --release --bin web
 
 # main image
-FROM alpine:latest
-COPY --from=builder /ourairports_api/target/x86_64-unknown-linux-musl/debug/web /usr/local/bin/ourairports_api
-EXPOSE 8080
-CMD ["ourairports_api"]
+FROM ubuntu:focal
+RUN apt update
+RUN apt -y install libssl1.1 ca-certificates
+COPY --from=builder /ourairports_api/target/release/web /usr/local/bin/ourairports_api
+#EXPOSE 8080
+#CMD ["ourairports_api"]

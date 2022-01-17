@@ -6,17 +6,21 @@ use crate::pages::regions::*;
 use crate::pages::runways::*;
 use crate::pages::{index, AppState};
 use actix_web::{middleware, App, HttpServer};
+use env_logger::Env;
+use log::error;
 
 mod pages;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
+    env_logger::init_from_env(Env::default().default_filter_or("info"));
     match AppState::new() {
         Ok(app_state) => {
             HttpServer::new(move || {
                 App::new()
                     .data(app_state.clone())
-                    .wrap(middleware::Compress::default()) // to enable compression
+                    .wrap(middleware::Compress::default())
+                    .wrap(middleware::Logger::default())// to enable compression
                     .service(index)
                     .service(get_airports)
                     .service(get_airports_by_id)
@@ -35,6 +39,10 @@ async fn main() -> std::io::Result<()> {
             .run()
             .await
         }
-        Err(e) => panic!("cannot fetch OurAirports data: {}", e),
+        Err(e) => {
+            error!("{}", e);
+            error!("fatal error: cannot fetch OurAirports data. stopping immediately");
+            panic!("cannot fetch OurAirports data: {}", e);
+        },
     }
 }

@@ -14,7 +14,7 @@
 //!     assert_eq!(2434, heathrow_airport.id());
 //!     assert_eq!("EGLL", heathrow_airport.ident());
 //!     assert_eq!("LHR", heathrow_airport.iata_code());
-//!     assert_eq!(AirportType::LargeAirport, heathrow_airport.airport_type());
+//!     assert_eq!(&AirportType::LargeAirport, heathrow_airport.airport_type());
 //!
 //! #    Ok(())
 //! # }
@@ -23,6 +23,7 @@
 use std::cmp::Ordering;
 use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
+use log::debug;
 
 use serde::{Deserialize, Serialize};
 
@@ -41,7 +42,7 @@ pub struct Airport {
     id: Id,
     ident: String,
     #[serde(rename = "type")]
-    airport_type: String,
+    airport_type: AirportType,
     name: String,
     latitude_deg: f64,
     longitude_deg: f64,
@@ -67,7 +68,9 @@ impl Airport {
     pub fn id(&self) -> Id {
         self.id
     }
-    /// The text identifier used in the OurAirports URL. This will be the ICAO code if available.
+    /// The text identifier used in the OurAirports URL.
+    ///
+    /// This will be the ICAO code if available.
     /// Otherwise, it will be a local airport code (if no conflict), or if nothing else is
     /// available, an internally-generated code starting with the ISO2 country code, followed by a
     /// dash and a four-digit number.
@@ -75,7 +78,7 @@ impl Airport {
         &self.ident
     }
     /// The type of the airport. See [`AirportType`] for available values.
-    pub fn airport_type(&self) -> &str {
+    pub fn airport_type(&self) -> &AirportType {
         &self.airport_type
     }
     /// The official airport name, including "Airport", "Airstrip", etc.
@@ -99,8 +102,10 @@ impl Airport {
         &self.continent
     }
     /// The two-character [ISO 3166:1-alpha2 code](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
-    /// for the country where the airport is (primarily) located. A handful of unofficial, non-ISO
-    /// codes are also in use, such as "XK" for Kosovo. The values corresponds to [`Country.code`](../countries/struct.Country.html#method.code)
+    /// for the country where the airport is (primarily) located.
+    ///
+    /// A handful of unofficial, non-ISO codes are also in use, such as "XK" for Kosovo.
+    /// The values corresponds to [`Country.code`](../countries/struct.Country.html#method.code)
     pub fn iso_country(&self) -> &str {
         &self.iso_country
     }
@@ -198,7 +203,10 @@ pub enum AirportType {
     /// Seaplane base
     SeaplaneBase,
     /// Closed airport
+    #[serde(alias = "closed")]
     ClosedAirport,
+    #[serde(alias = "balloonport")]
+    BalloonPort // undocumented type?
 }
 
 /// Returns a [`BTreeMap`] of all [`Airport`] in the latest OurAirports `airports.csv`
@@ -209,9 +217,12 @@ pub enum AirportType {
 /// with the de serialization process.
 pub fn get_airports_csv() -> Result<BTreeMap<Id, Airport>, FetchError> {
     // get data
+    debug!("getting data");
     let content = crate::web_request_blocking(AIRPORTS_CSV_URL)?;
     // initialise csv reader & return value
+    debug!("initialising CSV reader");
     let mut rdr = csv::Reader::from_reader(content.as_bytes());
+    debug!("parsing and deserializing data");
     let mut map = BTreeMap::new();
     for result in rdr.deserialize() {
         let record: Airport = result?;

@@ -18,6 +18,7 @@ pub mod runways;
 /// Type of all ID fields.
 pub type Id = u64;
 
+/// Error type for errors in fetching OurAirports data (e.g. [`airports::get_airports_csv()`])
 #[derive(thiserror::Error, Debug)]
 pub enum FetchError {
     #[error("Network error: {0}")]
@@ -45,7 +46,7 @@ pub enum Continent {
     SouthAmerica,
 }
 
-/// Trait for converting OurAirports data into JSON.
+/// Trait for converting OurAirports data into JSON string.
 pub trait ToJsonString {
     /// Serialize an OurAirports data to string of JSON.
     fn to_json_string(&self) -> serde_json::Result<String>

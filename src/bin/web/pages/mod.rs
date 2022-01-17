@@ -10,6 +10,7 @@ use ourairports_api::ourairports::runways::{get_runways_csv, Runway};
 use ourairports_api::ourairports::{FetchError, Id};
 use serde::Serialize;
 use std::collections::BTreeMap;
+use log::info;
 
 pub mod airport_frequencies;
 pub mod airports;
@@ -36,6 +37,7 @@ pub struct AppState {
 
 impl AppState {
     pub fn new() -> Result<Self, FetchError> {
+        info!("Downloading OurAirports data");
         Ok(AppState {
             airports: get_airports_csv()?,
             airport_frequencies: get_airport_frequencies_csv()?,

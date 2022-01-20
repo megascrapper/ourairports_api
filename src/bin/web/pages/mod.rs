@@ -1,4 +1,5 @@
 use actix_web::{get, HttpResponse, Responder};
+use actix_web::http::header::LOCATION;
 use ourairports_api::ourairports::airport_frequencies::{
     get_airport_frequencies_csv, AirportFrequency,
 };
@@ -22,7 +23,7 @@ pub mod runways;
 /// Home page.
 #[get("/")]
 pub async fn index() -> impl Responder {
-    HttpResponse::Ok().body("<h1>OurAirports API</h1>")
+    HttpResponse::MovedPermanently().set_header(LOCATION, "/home/index.html").finish()
 }
 
 #[derive(Clone)]

@@ -1,6 +1,6 @@
 services:
   web:
     build: .
-    command: ourairports_api
+    command: ./web
     ports:
       - "8080:8080"

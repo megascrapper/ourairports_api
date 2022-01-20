@@ -23,7 +23,7 @@ pub mod runways;
 /// Home page.
 #[get("/")]
 pub async fn index() -> impl Responder {
-    HttpResponse::MovedPermanently().set_header(LOCATION, "/home/index.html").finish()
+    HttpResponse::MovedPermanently().set_header(LOCATION, "/index.html").finish()
 }
 
 #[derive(Clone)]

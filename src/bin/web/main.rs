@@ -35,9 +35,7 @@ async fn main() -> std::io::Result<()> {
                     .service(get_countries_by_id)
                     .service(get_regions)
                     .service(get_regions_by_id)
-                    .service(actix_files::Files::new("/home", "./static/index"))
-                    .service(actix_files::Files::new("/docs", "./static/docs").show_files_listing())
-                    .service(actix_files::Files::new("/rust-docs", "./static/rust-docs").show_files_listing())
+                    .service(actix_files::Files::new("/", "./static").show_files_listing())
             })
             .bind("0.0.0.0:8080")?
             .run()

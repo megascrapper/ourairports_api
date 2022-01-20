@@ -6,6 +6,7 @@ use crate::pages::regions::*;
 use crate::pages::runways::*;
 use crate::pages::{index, AppState};
 use actix_web::{middleware, App, HttpServer};
+use actix_files;
 use env_logger::Env;
 use log::error;
 
@@ -34,6 +35,7 @@ async fn main() -> std::io::Result<()> {
                     .service(get_countries_by_id)
                     .service(get_regions)
                     .service(get_regions_by_id)
+                    //.service(actix_files::Files::new("/docs", "./static/docs"))
             })
             .bind("0.0.0.0:8080")?
             .run()

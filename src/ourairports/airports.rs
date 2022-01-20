@@ -20,10 +20,10 @@
 //! # }
 //! ```
 
+use log::debug;
 use std::cmp::Ordering;
 use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
-use log::debug;
 
 use serde::{Deserialize, Serialize};
 
@@ -206,7 +206,7 @@ pub enum AirportType {
     #[serde(alias = "closed")]
     ClosedAirport,
     #[serde(alias = "balloonport")]
-    BalloonPort // undocumented type?
+    BalloonPort, // undocumented type?
 }
 
 /// Returns a [`BTreeMap`] of all [`Airport`] in the latest OurAirports `airports.csv`

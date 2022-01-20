@@ -1,5 +1,6 @@
-use actix_web::{get, HttpResponse, Responder};
 use actix_web::http::header::LOCATION;
+use actix_web::{get, HttpResponse, Responder};
+use log::info;
 use ourairports_api::ourairports::airport_frequencies::{
     get_airport_frequencies_csv, AirportFrequency,
 };
@@ -11,7 +12,6 @@ use ourairports_api::ourairports::runways::{get_runways_csv, Runway};
 use ourairports_api::ourairports::{FetchError, Id};
 use serde::Serialize;
 use std::collections::BTreeMap;
-use log::info;
 
 pub mod airport_frequencies;
 pub mod airports;
@@ -23,7 +23,9 @@ pub mod runways;
 /// Home page.
 #[get("/")]
 pub async fn index() -> impl Responder {
-    HttpResponse::MovedPermanently().set_header(LOCATION, "/index.html").finish()
+    HttpResponse::MovedPermanently()
+        .set_header(LOCATION, "/index.html")
+        .finish()
 }
 
 #[derive(Clone)]

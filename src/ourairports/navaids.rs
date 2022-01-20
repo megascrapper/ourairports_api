@@ -18,11 +18,11 @@
 //! ```
 
 use crate::ourairports::{FetchError, Id, ToJsonString};
+use log::debug;
 use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
-use log::debug;
 
 const NAVAIDS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/navaids.csv";
 
@@ -123,11 +123,15 @@ impl Navaid {
     /// The latitude of the associated DME in decimal degrees (negative for south).
     ///
     /// If `None`, assume the value is the same as [`self.latitude_deg()`].
-    pub fn dme_latitude_deg(&self) -> Option<f64> { self.dme_latitude_deg }
+    pub fn dme_latitude_deg(&self) -> Option<f64> {
+        self.dme_latitude_deg
+    }
     /// The longitude of the associated DME in decimal degrees (negative for west).
     ///
     /// If `None`, assume the value is the same as [`self.longitude_deg()`].
-    pub fn dme_longitude_deg(&self) -> Option<f64> { self.dme_longitude_deg }
+    pub fn dme_longitude_deg(&self) -> Option<f64> {
+        self.dme_longitude_deg
+    }
     /// The associated DME transmitters elevation MSL in feet.
     ///
     /// If `None`, assume the value is the same as [`self.elevation_ft()`].

@@ -21,8 +21,8 @@ use std::cmp::Ordering;
 use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
 
-use serde::{Deserialize, Serialize};
 use log::debug;
+use serde::{Deserialize, Serialize};
 
 use crate::ourairports::{vec_string_from_string, Continent, FetchError, Id, ToJsonString};
 

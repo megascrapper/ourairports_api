@@ -14,8 +14,6 @@ fn web_request_blocking(url: &str) -> Result<String, reqwest::Error> {
         .timeout(Duration::from_secs(REQUEST_TIMEOUT))
         .build()?;
     client.get(url).send()?.text()
-
-
 }
 
 #[cfg(test)]

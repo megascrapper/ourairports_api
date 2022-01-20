@@ -11,10 +11,40 @@ docker-compose up -d
 ```
 
 ## Manual installation
+### Requirements
+* Rust
+* mdbook (`cargo install mdbook`)
+
+### Steps
+1. Create a new directory, like `app`.
+2. Copy the static folder in the project root directory to `app`.
+3. Build the application  binary:
 ```
 cargo build --release --bin web
 ```
-Then go to `target/release` to find the executable (usually named `web` or `web.exe` on Windows)
+4. Place the resulting executable (usually in `target/release/web` or `target/release/web.exe`) to the root of `app` 
+directory.
+5. Build the rustdoc files:
+```
+cargo doc
+```
+6. Place the output directory (usually in `target/doc`) to `app/static/rust-docs`
+7. `cd` to `docs` folder in project and build the JSON API docs:
+```
+mdbook build
+```
+8. Copy the contents of `book` folder to `app/static/docs`
+
+You should have the following final folder structure:
+```
+app/
+├─ static/
+│  ├─ docs/
+│  ├─ rust-docs/
+│  ├─ index.html
+├─ web
+
+```
 
 # Limitations/feature wishlist
 

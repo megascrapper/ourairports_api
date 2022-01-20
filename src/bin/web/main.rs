@@ -5,8 +5,8 @@ use crate::pages::navaids::*;
 use crate::pages::regions::*;
 use crate::pages::runways::*;
 use crate::pages::{index, AppState};
-use actix_web::{middleware, App, HttpServer};
 use actix_files;
+use actix_web::{middleware, App, HttpServer};
 use env_logger::Env;
 use log::error;
 
@@ -45,6 +45,6 @@ async fn main() -> std::io::Result<()> {
             error!("{}", e);
             error!("fatal error: cannot fetch OurAirports data. stopping immediately");
             panic!("cannot fetch OurAirports data: {}", e);
-        },
+        }
     }
 }

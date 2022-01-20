@@ -17,11 +17,11 @@
 //! ```
 
 use crate::ourairports::{FetchError, Id, ToJsonString};
+use log::debug;
 use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
-use log::debug;
 
 const AIRPORT_FREQUENCIES_CSV_URL: &str =
     "https://davidmegginson.github.io/ourairports-data/airport-frequencies.csv";

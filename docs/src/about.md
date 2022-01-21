@@ -9,7 +9,7 @@ the [OurAirports data dictionary](https://ourairports.com/help/data-dictionary.h
 
 ## Legend on data types
 
-`T` is a generic type parameter that can contain one of the non-generic data types.
+`T` is a generic type parameter that can be substituted as one of the non-generic data types.
 
 |Type|Description|Equivalent Rust type|
 |----|-----------|--------------------|

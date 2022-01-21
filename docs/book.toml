@@ -3,4 +3,4 @@ authors = ["Akbar Fadiansyah"]
 language = "en"
 multilingual = false
 src = "src"
-title = "ourairports_api Documentation"
+title = "OurAirports JSON API Documentation"

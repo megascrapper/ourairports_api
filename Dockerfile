@@ -21,5 +21,6 @@ RUN apt update
 RUN apt -y install libssl1.1 ca-certificates
 WORKDIR /ourairports_api
 COPY --from=builder /ourairports_api/target/release/web .
+COPY --from=builder /ourairports_api/static ./static
 COPY --from=builder /ourairports_api/target/doc ./static/rust-docs
 COPY --from=builder /ourairports_api/docs/book ./static/docs

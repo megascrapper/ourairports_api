@@ -37,7 +37,7 @@ async fn main() -> std::io::Result<()> {
                     .service(get_regions_by_id)
                     .service(actix_files::Files::new("/", "./static").show_files_listing())
             })
-            .bind("0.0.0.0:8080")?
+            .bind(std::env::var("BIND_ADDRESS").unwrap_or("127.0.0.1:8080".to_string()))?
             .run()
             .await
         }

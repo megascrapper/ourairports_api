@@ -43,7 +43,7 @@ pub struct Runway {
     airport_ident: String,
     length_ft: Option<i32>,
     width_ft: Option<i32>,
-    surface: String,
+    surface: String, // TODO: make this an enum once the vocab is controlled
     #[serde(deserialize_with = "bool_from_str")]
     lighted: bool,
     #[serde(deserialize_with = "bool_from_str")]

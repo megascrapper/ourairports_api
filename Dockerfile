@@ -1,3 +1,4 @@
+# TODO: redo this dockerfile
 # build the web app and docs
 FROM rust:1 AS builder
 WORKDIR /ourairports_api

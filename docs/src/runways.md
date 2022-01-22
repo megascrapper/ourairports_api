@@ -35,6 +35,10 @@
 
 `/api/v1/runways/:id` are not contained in an array (i.e. only returns the object).
 
+## Parameters
+- `airport_ref`
+- `airport_ident`
+
 ## Examples
 
 > GET `/api/v1/runways/234512`

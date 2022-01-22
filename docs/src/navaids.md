@@ -35,6 +35,12 @@
 
 `/api/v1/navaids/:id` are not contained in an array (i.e. only returns the object).
 
+## Parameters
+- `filename`
+- `ident`
+- `iso_country`
+- `associated_airport`
+
 ## Examples
 
 > GET `/api/v1/navaids/86738`

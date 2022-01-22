@@ -2,7 +2,7 @@
 //!
 //! # Examples
 //! ```
-//! use ourairports_api::ourairports::airport_frequencies::*;
+//! use ourairports::airport_frequencies::*;
 //!
 //! # fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!     let airport_frequencies = get_airport_frequencies_csv()?;
@@ -16,7 +16,7 @@
 //! # }
 //! ```
 
-use crate::ourairports::{FetchError, Id, ToJsonString};
+use crate::{FetchError, Id, ToJsonString};
 use log::debug;
 use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;

@@ -3,8 +3,8 @@ use std::collections::BTreeSet;
 use actix_web::{get, web, HttpResponse, Responder};
 use serde::Deserialize;
 
-use ourairports_api::ourairports::airport_frequencies::AirportFrequency;
-use ourairports_api::ourairports::Id;
+use ourairports::airport_frequencies::AirportFrequency;
+use ourairports::Id;
 
 use super::{AppState, ErrorResponse};
 

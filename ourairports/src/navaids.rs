@@ -3,7 +3,7 @@
 //!
 //! # Examples
 //! ```
-//! use ourairports_api::ourairports::navaids::*;
+//! use ourairports::navaids::*;
 //!
 //! # fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!     let navaids = get_navaids_csv()?;
@@ -17,7 +17,7 @@
 //! # }
 //! ```
 
-use crate::ourairports::{FetchError, Id, ToJsonString};
+use crate::{FetchError, Id, ToJsonString};
 use log::debug;
 use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;

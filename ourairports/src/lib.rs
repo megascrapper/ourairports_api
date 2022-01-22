@@ -5,6 +5,10 @@
 //! [data dictionary](https://ourairports.com/help/data-dictionary.html) and
 //! [map legend](https://ourairports.com/help/#legend)
 
+
+use log::debug;
+use reqwest::blocking::Client;
+use std::time::Duration;
 use serde::de::{self, Unexpected};
 use serde::{Deserialize, Deserializer, Serialize};
 
@@ -17,6 +21,9 @@ pub mod runways;
 
 /// Type of all ID fields.
 pub type Id = u64;
+
+/// Time limit for downloading one file
+const REQUEST_TIMEOUT: u64 = 300;
 
 /// Error type for errors in fetching OurAirports data (e.g. [`airports::get_airports_csv()`])
 #[derive(thiserror::Error, Debug)]
@@ -91,3 +98,13 @@ where
         _ => Ok(keywords.split(',').map(|s| s.trim().to_string()).collect()),
     }
 }
+
+fn web_request_blocking(url: &str) -> Result<String, reqwest::Error> {
+    debug!("requesting data from {}", url);
+    //reqwest::blocking::get(url)?.text()
+    let client = Client::builder()
+        .timeout(Duration::from_secs(REQUEST_TIMEOUT))
+        .build()?;
+    client.get(url).send()?.text()
+}
+

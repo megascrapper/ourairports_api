@@ -2,8 +2,8 @@
 //!
 //! # Examples
 //! ```
-//! use ourairports_api::ourairports::countries::*;
-//! use ourairports_api::ourairports::Continent;
+//! use ourairports::countries::*;
+//! use ourairports::Continent;
 //!
 //! # fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!     let countries = get_countries_csv()?;
@@ -24,7 +24,7 @@ use std::hash::{Hash, Hasher};
 use log::debug;
 use serde::{Deserialize, Serialize};
 
-use crate::ourairports::{vec_string_from_string, Continent, FetchError, Id, ToJsonString};
+use crate::{vec_string_from_string, Continent, FetchError, Id, ToJsonString};
 
 const COUNTRIES_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/countries.csv";
 

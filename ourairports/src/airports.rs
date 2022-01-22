@@ -4,7 +4,7 @@
 //!
 //! # Examples
 //! ```
-//! use ourairports_api::ourairports::airports::*;
+//! use ourairports::airports::*;
 //!
 //! # fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!     let airports = get_airports_csv()?;
@@ -27,7 +27,7 @@ use std::hash::{Hash, Hasher};
 
 use serde::{Deserialize, Serialize};
 
-use crate::ourairports::{
+use crate::{
     bool_from_str, vec_string_from_string, Continent, FetchError, Id, ToJsonString,
 };
 

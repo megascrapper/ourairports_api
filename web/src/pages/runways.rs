@@ -2,8 +2,8 @@ use actix_web::{get, web, HttpResponse, Responder};
 use serde::Deserialize;
 use std::collections::BTreeSet;
 
-use ourairports_api::ourairports::runways::Runway;
-use ourairports_api::ourairports::Id;
+use ourairports::runways::Runway;
+use ourairports::Id;
 
 use super::{AppState, ErrorResponse};
 

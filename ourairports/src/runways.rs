@@ -2,7 +2,7 @@
 //!
 //! # Examples
 //! ```
-//! use ourairports_api::ourairports::runways::*;
+//! use ourairports::runways::*;
 //!
 //! # fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!     let runways = get_runways_csv()?;
@@ -24,7 +24,7 @@ use std::hash::{Hash, Hasher};
 use log::debug;
 use serde::{Deserialize, Serialize};
 
-use crate::ourairports::{bool_from_str, FetchError, Id, ToJsonString};
+use crate::{bool_from_str, FetchError, Id, ToJsonString};
 
 const RUNWAYS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/runways.csv";
 

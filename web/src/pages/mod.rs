@@ -1,15 +1,15 @@
 use actix_web::http::header::LOCATION;
 use actix_web::{get, HttpResponse, Responder};
 use log::info;
-use ourairports_api::ourairports::airport_frequencies::{
+use ourairports::airport_frequencies::{
     get_airport_frequencies_csv, AirportFrequency,
 };
-use ourairports_api::ourairports::airports::{get_airports_csv, Airport};
-use ourairports_api::ourairports::countries::{get_countries_csv, Country};
-use ourairports_api::ourairports::navaids::{get_navaids_csv, Navaid};
-use ourairports_api::ourairports::regions::{get_regions_csv, Region};
-use ourairports_api::ourairports::runways::{get_runways_csv, Runway};
-use ourairports_api::ourairports::{FetchError, Id};
+use ourairports::airports::{get_airports_csv, Airport};
+use ourairports::countries::{get_countries_csv, Country};
+use ourairports::navaids::{get_navaids_csv, Navaid};
+use ourairports::regions::{get_regions_csv, Region};
+use ourairports::runways::{get_runways_csv, Runway};
+use ourairports::{FetchError, Id};
 use serde::Serialize;
 use std::collections::BTreeMap;
 

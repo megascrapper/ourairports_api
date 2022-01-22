@@ -1,60 +1,41 @@
 # Airport frequencies
 
 > GET `/api/v1/airport-frequencies`
+> 
+> GET `/api/v1/airport-frequencies/:id` (for individual airport frequency)
 
 ## Schema
 
-```js
+```json
 [
-    {
-        "id": String,
-        "airport": {
-            "id": String,
-            "ident": String,
-            "type": String,
-            "name": String,
-            "coordinates": {
-                "latitude_deg": Float64,
-                "longitude_deg": Float64,
-                "elevation_ft": Int32?
-            },
-            "continent": String,
-            "country": {
-                "id": String,
-                "code": String,
-                "name": String,
-                "continent": String,
-                "wikipedia_link": String,
-                "keywords": [String]
-            },
-            "region": {
-                "id": String,
-                "code": String,
-                "local_code": String,
-                "name": String,
-                "continent": String,
-                "country": {
-                    "id": String,
-                    "code": String,
-                    "name": String,
-                    "continent": String,
-                    "wikipedia_link": String,
-                    "keywords": [String]
-                },
-                "wikipedia_link": String,
-                "keywords": [String]
-            }
-            "municipality": String,
-            "scheduled_service": Bool,
-            "gps_code": String?,
-            "iata_code": String?,
-            "local_code": String?,
-            "wikipedia_link": String?,
-            "keywords": [String]
-        },
-        "type": String,
-        "description", String,
-        "frequency_mhz", String
-    }
+  {
+    "id": "Uint64",
+    "airport_ref": "Uint64",
+    "airport_ident": "String",
+    "type": "String",
+    "description": "String",
+    "frequency_mhz": "String"
+  }
 ]
+```
+
+`/api/v1/airport-frequencies/:id` are not contained in an array (i.e. only returns the object).
+
+## Parameters
+- `airport_ref`
+- `airport_ident`
+
+## Examples
+
+> GET `/api/v1/airport-frequencies/54836` 
+
+```json
+{
+    "id": 54836,
+    "airport_ref": 3206,
+    "airport_ident": "HKJK",
+    "type": "TWR",
+    "description": "Nairobi Tower",
+    "frequency_mhz": "118.7"
+}
 ```

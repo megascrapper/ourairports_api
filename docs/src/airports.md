@@ -9,7 +9,7 @@
 ```json
 [
     {
-        "id": "Int32",
+        "id": "Uint64",
         "ident": "String",
         "type": "String",
         "name": "String",
@@ -42,7 +42,9 @@
 - `local_code`
 
 ## Example
+
 > GET `/api/v1/airports/2434`
+
 ```json
 {
     "id": 2434,

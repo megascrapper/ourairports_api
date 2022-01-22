@@ -1,86 +1,65 @@
 # Navaids
 
 > GET `/api/v1/navaids`
+> 
+> GET `/api/v1/navaids/:id` (for individual navigation aid)
 
 ## Schema
 
-```js
+```json
 [
-    {
-        "id": String,
-        "filename": String,
-        "ident": String,
-        "name": String,
-        "type": String,
-        "frequency_khz": String,
-        "coordinates": {
-            "latitude_deg": Float64,
-            "longitude_deg": Float64,
-            "elevation_ft": Int32?
-        },
-        "country": {
-            "id": String,
-            "code": String,
-            "name": String,
-            "continent": String,
-            "wikipedia_link": String,
-            "keywords": [String]
-        },
-        "dme_freuquency_khz": String,
-        "dme_channel": String,
-        "dme_coordinates": ({
-            "latitude_deg": Float64,
-            "longitude_deg": Float64,
-            "elevation_ft": Int32?
-        })?,
-        "slaved_variation_deg": Float64?,
-        "magnetic_variation_deg": Float64?,
-        "usage_type": String,
-        "power": String,
-        "associated_airport": {
-            "id": String,
-            "ident": String,
-            "type": String,
-            "name": String,
-            "coordinates": {
-                "latitude_deg": Float64,
-                "longitude_deg": Float64,
-                "elevation_ft": Int32?
-            },
-            "continent": String,
-            "country": {
-                "id": String,
-                "code": String,
-                "name": String,
-                "continent": String,
-                "wikipedia_link": String,
-                "keywords": [String]
-            },
-            "region": {
-                "id": String,
-                "code": String,
-                "local_code": String,
-                "name": String,
-                "continent": String,
-                "country": {
-                    "id": String,
-                    "code": String,
-                    "name": String,
-                    "continent": String,
-                    "wikipedia_link": String,
-                    "keywords": [String]
-                },
-                "wikipedia_link": String,
-                "keywords": [String]
-            }
-            "municipality": String,
-            "scheduled_service": Bool,
-            "gps_code": String?,
-            "iata_code": String?,
-            "local_code": String?,
-            "wikipedia_link": String?,
-            "keywords": [String]
-        }
-    }
+  {
+    "id": "Uint64",
+    "filename": "String",
+    "ident": "String",
+    "name": "String",
+    "type": "String",
+    "frequency_khz": "String",
+    "latitude_deg": "Float64?",
+    "longitude_deg": "Float64?",
+    "elevation_ft": "Int32?",
+    "iso_country": "String",
+    "dme_frequency_khz": "String",
+    "dme_channel": "String",
+    "dme_latitude_deg": "Float64?",
+    "dme_longitude_deg": "Float64?",
+    "dme_elevation_ft": "Int32?",
+    "slaved_variation_deg": "Float64?",
+    "magnetic_variation_deg": "Float64?",
+    "usageType": "String?",
+    "power": "String?",
+    "associated_airport": "String"
+  }
 ]
+```
+
+`/api/v1/navaids/:id` are not contained in an array (i.e. only returns the object).
+
+## Examples
+
+> GET `/api/v1/navaids/86738`
+
+```json
+{
+    "id": 86738,
+    "filename": "Christchurch_VOR-DME_NZ",
+    "ident": "CH",
+    "name": "Christchurch",
+    "type": "VOR-DME",
+    "frequency_khz": "115300",
+    "latitude_deg": -43.50410079956055,
+    "longitude_deg": 172.51499938964844,
+    "elevation_ft": 123,
+    "iso_country": "NZ",
+    "dme_frequency_khz": "115300",
+    "dme_channel": "100X",
+    "dme_latitude_deg": -43.5042,
+    "dme_longitude_deg": 172.515,
+    "dme_elevation_ft": 140,
+    "slaved_variation_deg": 23.007,
+    "magnetic_variation_deg": 23.188,
+    "usageType": "BOTH",
+    "power": "HIGH",
+    "associated_airport": "NZCH"
+}
 ```

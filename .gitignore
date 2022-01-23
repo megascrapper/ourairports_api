@@ -2,8 +2,8 @@
 Cargo.lock
 /tmp
 # to be generated manually via mdbook and rustdoc
-/web/static/docs
-/web/static/rust-docs
+/static/docs
+/static/rust-docs
 
 ### CLion+all ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider

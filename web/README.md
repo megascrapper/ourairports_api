@@ -19,41 +19,45 @@ docker-compose up -d
 
 ### Steps
 
-1. Create a new directory, like `app`.
-2. Copy the static folder in the project root directory to `app`.
-3. Build the application binary:
+This guide assumes current working directory is `web`.
+
+1. Build the application binary:
 
 ```
 cargo build --release -p ourairports_api
 ```
 
-4. Place the resulting executable (usually in `target/release/ourairports_api` or `target/release/ourairports_api.exe`)
-   to the root of `app` directory.
-5. Build the rustdoc files:
-
-```
-cargo doc
-```
-
-6. Place the output directory (usually in `target/doc`) to `app/static/rust-docs`
-7. `cd` to `docs` folder in project and build the JSON API docs:
+2. `cd` to `docs` folder and build the JSON API docs:
 
 ```
 mdbook build
 ```
 
-8. Copy the contents of `book` folder to `app/static/docs`
+3. Copy the contents of `book` folder to `../static/docs`
 
-You should have the following final folder structure:
+In the end you should have the following folder structure:
 
 ```
-app/
-├─ static/
-│  ├─ docs/
-│  ├─ rust-docs/
-│  ├─ index.html
-├─ web
+web
+├── docs
+├── src
+└── static
+    ├── docs
+    ├── index.html
+    └── starter-template.css
+```
+4. Run with `cargo run --release`
 
+
+If you want to run without `cargo`, the `static` directory must be on the same directory as the executable, so it should look like this:
+
+```
+<current_dir>
+├── ourairports_api(.exe)
+└── static
+    ├── docs
+    ├── index.html
+    └── starter-template.css
 ```
 
 # Limitations/feature wishlist

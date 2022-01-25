@@ -1,8 +1,7 @@
 Welcome to the OurAirports JSON API documentation. Here you can find the URL for each data, the available queries as
 well as the fields and its data type.
 
-If you're looking for documentation of the `ourairports_api` crate, you should go to the rust documentation in the home
-page instead.
+If you're looking for documentation of the `ourairports_api` crate, you should go to the [library API documentation](https://docs.rs/ourairports/0.1.0/ourairports/) instead.
 
 For more information about what each field contains, you should go to
 the [OurAirports data dictionary](https://ourairports.com/help/data-dictionary.html).
@@ -29,4 +28,3 @@ the [OurAirports data dictionary](https://ourairports.com/help/data-dictionary.h
 |`Bool`|Boolean values (`true` or `false`)|`bool`
 |`[T]`|An array of type `T`|`Vec<T>`
 |`T?`|A nullable value of type `T`|`Option<T>`
-

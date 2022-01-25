@@ -27,7 +27,6 @@
 
 use log::debug;
 use reqwest::blocking::Client;
-use std::time::Duration;
 use serde::de::{self, Unexpected};
 use serde::{Deserialize, Deserializer, Serialize};
 

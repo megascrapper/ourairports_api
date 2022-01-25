@@ -1,9 +1,28 @@
-//! Contains all of the OurAirports data types and its associated enums and functions.
+//! Rust interface for handling [OurAirports data](https://ourairports.com/data/).
+//!
+//! # Examples
+//! Retrieving airport data
+//! ```
+//! use ourairports::airports::*;
+//!
+//! fn main() -> Result<(), Box<dyn std::error::Error>> {
+//!     let airports = get_airports_csv()?;
+//!
+//!     // London Heathrow Airport (ICAO: EGLL, IATA: LHR)
+//!     let heathrow_airport = airports.get(&2434).unwrap();
+//!     assert_eq!(2434, heathrow_airport.id());
+//!     assert_eq!("EGLL", heathrow_airport.ident());
+//!     assert_eq!("LHR", heathrow_airport.iata_code());
+//!     assert_eq!(&AirportType::LargeAirport, heathrow_airport.airport_type());
+//!
+//!    Ok(())
+//! }
+//! ```
 //!
 //! # Credits
 //! The descriptions for many of the fields and enum variants is adapted from the OurAirports
 //! [data dictionary](https://ourairports.com/help/data-dictionary.html) and
-//! [map legend](https://ourairports.com/help/#legend)
+//! [map legend](https://ourairports.com/help/#legend).
 
 
 use log::debug;
@@ -21,9 +40,6 @@ pub mod runways;
 
 /// Type of all ID fields.
 pub type Id = u64;
-
-/// Time limit for downloading one file
-const REQUEST_TIMEOUT: u64 = 300;
 
 /// Error type for errors in fetching OurAirports data (e.g. [`airports::get_airports_csv()`])
 #[derive(thiserror::Error, Debug)]
@@ -101,9 +117,8 @@ where
 
 fn web_request_blocking(url: &str) -> Result<String, reqwest::Error> {
     debug!("requesting data from {}", url);
-    //reqwest::blocking::get(url)?.text()
     let client = Client::builder()
-        .timeout(Duration::from_secs(REQUEST_TIMEOUT))
+        .timeout(None)
         .build()?;
     client.get(url).send()?.text()
 }

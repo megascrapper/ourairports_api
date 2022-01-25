@@ -1,7 +1,6 @@
-<!-- TODO: redo this readme and add more readme on each crate -->
 # ourairports_api
 
-This repository contains the library for using [OurAirports open data](https://ourairports.com/data/) in Rust and  a 
+This repository contains the library for using [OurAirports open data](https://ourairports.com/data/) in Rust and a 
 website providing JSON REST API of OurAirports data.
 
 * [`ourairports` crate (library)](ourairports/README.md)

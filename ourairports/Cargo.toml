@@ -3,7 +3,11 @@ name = "ourairports"
 version = "0.1.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
-description = "Rust interface for interacting with OurAirports data"
+description = "Rust interface for handling OurAirports data"
+homepage = "https://github.com/megascrapper/ourairports_api/tree/master/ourairports"
+repository = "https://github.com/megascrapper/ourairports_api/tree/master/ourairports"
+categories = ["aerospace"]
+keywords = ["ourairports", "aviation-data", "airport-data", "open-data"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

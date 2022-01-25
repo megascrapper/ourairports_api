@@ -1,4 +1,4 @@
-//! Contains the type representing a single radio frequency.
+//! Contains the type representing a single landing surface (runway, helipad or waterway).
 //!
 //! # Examples
 //! ```

@@ -5,7 +5,7 @@ edition = "2021"
 license = "MIT OR Apache-2.0"
 description = "Rust interface for handling OurAirports data"
 homepage = "https://github.com/megascrapper/ourairports_api/tree/master/ourairports"
-repository = "https://github.com/megascrapper/ourairports_api/tree/master/ourairports"
+repository = "https://github.com/megascrapper/ourairports_api"
 categories = ["aerospace"]
 keywords = ["ourairports", "aviation-data", "airport-data", "open-data"]
 

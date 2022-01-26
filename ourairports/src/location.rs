@@ -1,7 +1,7 @@
 pub use ourairports_derive::ContainsLocation;
 
-pub type Latitude = f64;
-pub type Longitude = f64;
+pub type Latitude = Option<f64>;
+pub type Longitude = Option<f64>;
 pub type Elevation = Option<i32>;
 
 pub trait ContainsLocation {
@@ -10,9 +10,9 @@ pub trait ContainsLocation {
     fn elevation_ft(&self) -> Elevation;
 }
 
-pub trait ToLocation {
+pub trait ExtractLocation {
     /// Extracts location information for this item.
-    fn to_location(&self) -> Location where Self: ContainsLocation {
+    fn location(&self) -> Location where Self: ContainsLocation {
         Location {
             latitude_deg: self.latitude_deg(),
             longitude_deg: self.latitude_deg(),
@@ -36,5 +36,15 @@ impl Location {
     }
     pub fn elevation_ft(&self) -> Elevation {
         self.elevation_ft
+    }
+}
+
+impl<T: ContainsLocation> From<T> for Location {
+    fn from(item: T) -> Self {
+        Location {
+            latitude_deg: item.latitude_deg(),
+            longitude_deg: item.latitude_deg(),
+            elevation_ft: item.elevation_ft()
+        }
     }
 }

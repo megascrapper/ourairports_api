@@ -23,6 +23,7 @@ use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
+use crate::location::{Elevation, Latitude, Longitude, ContainsLocation, ExtractLocation, Location};
 
 const NAVAIDS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/navaids.csv";
 
@@ -30,7 +31,7 @@ const NAVAIDS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data
 ///
 /// See the [OurAirports data dictionary](https://ourairports.com/help/data-dictionary.html#navaids)
 /// for more information of each field.
-#[derive(Deserialize, Debug, Clone, Serialize)]
+#[derive(Deserialize, Debug, Clone, Serialize, ContainsLocation)]
 pub struct Navaid {
     id: Id,
     filename: String,
@@ -39,15 +40,15 @@ pub struct Navaid {
     #[serde(rename = "type")]
     navaid_type: NavaidType,
     frequency_khz: String,
-    latitude_deg: Option<f64>,
-    longitude_deg: Option<f64>,
-    elevation_ft: Option<i32>,
+    latitude_deg: Latitude,
+    longitude_deg: Longitude,
+    elevation_ft: Elevation,
     iso_country: String,
     dme_frequency_khz: String,
     dme_channel: String,
-    dme_latitude_deg: Option<f64>,
-    dme_longitude_deg: Option<f64>,
-    dme_elevation_ft: Option<i32>,
+    dme_latitude_deg: Latitude,
+    dme_longitude_deg: Longitude,
+    dme_elevation_ft: Elevation,
     slaved_variation_deg: Option<f64>,
     magnetic_variation_deg: Option<f64>,
     #[serde(rename = "usageType")]
@@ -89,18 +90,6 @@ impl Navaid {
     /// For an NDB or NDB-DME, you can use this frequency directly.
     pub fn frequency_khz(&self) -> &str {
         &self.frequency_khz
-    }
-    /// The latitude of the navaid in decimal degrees (negative for south). Returns `None` if not available.
-    pub fn latitude_deg(&self) -> Option<f64> {
-        self.latitude_deg
-    }
-    /// The longitude of the navaid in decimal degrees (negative for west). Returns `None` if not available.
-    pub fn longitude_deg(&self) -> Option<f64> {
-        self.longitude_deg
-    }
-    /// The navaid's elevation MSL in feet. Returns `None` if not available.
-    pub fn elevation_ft(&self) -> Option<i32> {
-        self.elevation_ft
     }
     /// The two-character [ISO 3166:1-alpha2 code](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
     /// for the country that operates the navaid.
@@ -170,6 +159,8 @@ impl Navaid {
         &self.associated_airport
     }
 }
+
+impl ExtractLocation for Navaid {}
 
 impl PartialEq for Navaid {
     fn eq(&self, other: &Self) -> bool {

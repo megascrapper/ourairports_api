@@ -30,7 +30,7 @@ use serde::{Deserialize, Serialize};
 use crate::{
     bool_from_str, vec_string_from_string, Continent, FetchError, Id, ToJsonString,
 };
-use crate::location::{ContainsLocation, Elevation, Latitude, Longitude, ToLocation};
+use crate::location::{ContainsLocation, Elevation, Latitude, Longitude, ExtractLocation};
 
 const AIRPORTS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/airports.csv";
 
@@ -161,7 +161,7 @@ impl Airport {
 //     }
 // }
 
-impl ToLocation for Airport {}
+impl ExtractLocation for Airport {}
 
 impl PartialEq for Airport {
     fn eq(&self, other: &Self) -> bool {

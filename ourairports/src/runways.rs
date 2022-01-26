@@ -25,7 +25,7 @@ use log::debug;
 use serde::{Deserialize, Serialize};
 
 use crate::{bool_from_str, FetchError, Id, ToJsonString};
-use crate::location::{Elevation, Latitude, Longitude, ContainsLocation, ExtractLocation};
+use crate::location::{Elevation, Latitude, Longitude, ContainsLocation};
 
 const RUNWAYS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/runways.csv";
 
@@ -253,8 +253,6 @@ impl RunwayEnd {
         self.displaced_threshold_ft
     }
 }
-
-impl ExtractLocation for RunwayEnd {}
 
 /// Returns a [`BTreeMap`] of all [`Runway`] in the latest OurAirports `runways.csv`
 /// with its ID as the key, sorted according to its keys.

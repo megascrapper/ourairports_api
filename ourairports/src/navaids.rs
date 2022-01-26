@@ -23,7 +23,7 @@ use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
-use crate::location::{Elevation, Latitude, Longitude, ContainsLocation, ExtractLocation};
+use crate::location::{Elevation, Latitude, Longitude, ContainsLocation};
 
 const NAVAIDS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/navaids.csv";
 
@@ -159,8 +159,6 @@ impl Navaid {
         &self.associated_airport
     }
 }
-
-impl ExtractLocation for Navaid {}
 
 impl PartialEq for Navaid {
     fn eq(&self, other: &Self) -> bool {

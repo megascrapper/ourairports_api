@@ -20,17 +20,15 @@
 //! # }
 //! ```
 
-use log::debug;
 use std::cmp::Ordering;
 use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
 
+use log::debug;
 use serde::{Deserialize, Serialize};
 
-use crate::{
-    bool_from_str, vec_string_from_string, Continent, FetchError, Id, ToJsonString,
-};
-use crate::location::{ContainsLocation, Elevation, Latitude, Longitude, ExtractLocation};
+use crate::location::{ContainsLocation, Elevation, Latitude, Longitude};
+use crate::{bool_from_str, vec_string_from_string, Continent, FetchError, Id, ToJsonString};
 
 const AIRPORTS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/airports.csv";
 
@@ -160,8 +158,6 @@ impl Airport {
 //         self.elevation_ft
 //     }
 // }
-
-impl ExtractLocation for Airport {}
 
 impl PartialEq for Airport {
     fn eq(&self, other: &Self) -> bool {

@@ -8,11 +8,8 @@ pub trait ContainsLocation {
     fn latitude_deg(&self) -> Latitude;
     fn longitude_deg(&self) -> Longitude;
     fn elevation_ft(&self) -> Elevation;
-}
-
-pub trait ExtractLocation {
     /// Extracts location information for this item.
-    fn location(&self) -> Location where Self: ContainsLocation {
+    fn extract_location(&self) -> Location where Self: ContainsLocation {
         Location {
             latitude_deg: self.latitude_deg(),
             longitude_deg: self.latitude_deg(),

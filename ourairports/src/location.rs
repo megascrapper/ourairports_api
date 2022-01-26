@@ -1,15 +1,38 @@
+//! TODO: description
+//!
+//! # Examples
+//! Extracting location from an `Airport` instance
+//!
+//! ```
+//! use ourairports::airports::*;
+//! use ourairports::location::ContainsLocation;
+//!
+//! # fn main() -> Result<(), Box<dyn std::error::Error>> {
+//!     let airports = get_airports_csv()?;
+//!
+//!     // London Heathrow Airport (ICAO: EGLL, IATA: LHR)
+//!     let heathrow_airport = airports.get(&2434).unwrap();
+//!     let location = heathrow_airport.extract_location();
+//!     assert_eq!(heathrow_airport.latitude_deg(), location.latitude_deg());
+//!
+//! #    Ok(())
+//! # }
+//! ```
+
+
 pub use ourairports_derive::ContainsLocation;
 
 pub type Latitude = Option<f64>;
 pub type Longitude = Option<f64>;
 pub type Elevation = Option<i32>;
 
+
 pub trait ContainsLocation {
     fn latitude_deg(&self) -> Latitude;
     fn longitude_deg(&self) -> Longitude;
     fn elevation_ft(&self) -> Elevation;
     /// Extracts location information for this item.
-    fn extract_location(&self) -> Location where Self: ContainsLocation {
+    fn extract_location(&self) -> Location {
         Location {
             latitude_deg: self.latitude_deg(),
             longitude_deg: self.latitude_deg(),

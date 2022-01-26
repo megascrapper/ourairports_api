@@ -30,6 +30,7 @@ use serde::{Deserialize, Serialize};
 use crate::{
     bool_from_str, vec_string_from_string, Continent, FetchError, Id, ToJsonString,
 };
+use crate::location::{ContainsLocation, Elevation, Latitude, Longitude, ToLocation};
 
 const AIRPORTS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/airports.csv";
 
@@ -37,16 +38,16 @@ const AIRPORTS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-dat
 ///
 /// See the [OurAirports data dictionary](https://ourairports.com/help/data-dictionary.html#airports)
 /// for more information of each field.
-#[derive(Deserialize, Debug, Clone, Serialize)]
+#[derive(Deserialize, Debug, Clone, Serialize, ContainsLocation)]
 pub struct Airport {
     id: Id,
     ident: String,
     #[serde(rename = "type")]
     airport_type: AirportType,
     name: String,
-    latitude_deg: f64,
-    longitude_deg: f64,
-    elevation_ft: Option<i32>,
+    latitude_deg: Latitude,
+    longitude_deg: Longitude,
+    elevation_ft: Elevation,
     continent: Continent,
     iso_country: String,
     iso_region: String,
@@ -84,18 +85,6 @@ impl Airport {
     /// The official airport name, including "Airport", "Airstrip", etc.
     pub fn name(&self) -> &str {
         &self.name
-    }
-    /// The airport latitude in decimal degrees (positive for north).
-    pub fn latitude_deg(&self) -> f64 {
-        self.latitude_deg
-    }
-    /// The airport longitude in decimal degrees (positive for east).
-    pub fn longitude_deg(&self) -> f64 {
-        self.longitude_deg
-    }
-    /// The airport elevation above MSL in feet (negative for altitude below MSL).
-    pub fn elevation_ft(&self) -> Option<i32> {
-        self.elevation_ft
     }
     /// The continent where the airport is located. See [`Continent`] for possible values.
     pub fn continent(&self) -> &Continent {
@@ -156,6 +145,23 @@ impl Airport {
         &self.keywords
     }
 }
+
+// impl ContainsLocation for Airport {
+//     /// The airport latitude in decimal degrees (positive for north).
+//     fn latitude_deg(&self) -> Latitude {
+//         self.latitude_deg
+//     }
+//     /// The airport longitude in decimal degrees (positive for east).
+//     fn longitude_deg(&self) -> Longitude {
+//         self.longitude_deg
+//     }
+//     /// The airport elevation above MSL in feet (negative for altitude below MSL).
+//     fn elevation_ft(&self) -> Elevation {
+//         self.elevation_ft
+//     }
+// }
+
+impl ToLocation for Airport {}
 
 impl PartialEq for Airport {
     fn eq(&self, other: &Self) -> bool {

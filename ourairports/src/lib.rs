@@ -36,6 +36,7 @@ pub mod countries;
 pub mod navaids;
 pub mod regions;
 pub mod runways;
+pub mod location;
 
 /// Type of all ID fields.
 pub type Id = u64;

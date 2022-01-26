@@ -1,2 +1,2 @@
 [workspace]
-members = ["ourairports", "web"]
+members = ["ourairports", "web", "ourairports_derive"]

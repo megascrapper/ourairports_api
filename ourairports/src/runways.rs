@@ -13,7 +13,7 @@
 //!     assert_eq!("08L", example_runway.le_ident());
 //!     assert_eq!("26R", example_runway.he_ident());
 //!     assert_eq!("CYVR", example_runway.airport_ident());
-//! #    Ok(())
+//! #   Ok(())
 //! # }
 //! ```
 
@@ -25,6 +25,7 @@ use log::debug;
 use serde::{Deserialize, Serialize};
 
 use crate::{bool_from_str, FetchError, Id, ToJsonString};
+use crate::location::{Elevation, Latitude, Longitude, ContainsLocation, ExtractLocation};
 
 const RUNWAYS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/runways.csv";
 
@@ -166,6 +167,32 @@ impl Runway {
     pub fn he_displaced_threshold_ft(&self) -> Option<i32> {
         self.he_displaced_threshold_ft
     }
+    /// Extracts the the low-numbered end of the runway information.
+    pub fn extract_le_info(&self) -> RunwayEnd {
+        RunwayEnd {
+            ident: self.le_ident.to_owned(),
+            airport_ref: self.airport_ref.to_owned(),
+            airport_ident: self.airport_ident.to_owned(),
+            latitude_deg: self.le_latitude_deg,
+            longitude_deg: self.le_longitude_deg,
+            elevation_ft: self.le_elevation_ft,
+            heading_deg_true: self.le_heading_deg_true,
+            displaced_threshold_ft: self.le_displaced_threshold_ft
+        }
+    }
+    /// Extracts the the high-numbered end of the runway information.
+    pub fn extract_he_info(&self) -> RunwayEnd {
+        RunwayEnd {
+            ident: self.he_ident.to_owned(),
+            airport_ref: self.airport_ref.to_owned(),
+            airport_ident: self.airport_ident.to_owned(),
+            latitude_deg: self.he_latitude_deg,
+            longitude_deg: self.he_longitude_deg,
+            elevation_ft: self.he_elevation_ft,
+            heading_deg_true: self.he_heading_deg_true,
+            displaced_threshold_ft: self.he_displaced_threshold_ft
+        }
+    }
 }
 
 impl PartialEq for Runway {
@@ -195,6 +222,39 @@ impl Hash for Runway {
 }
 
 impl ToJsonString for Runway {}
+
+/// Contains information about a single end of a runway
+#[derive(Serialize, Deserialize, Debug, Clone, ContainsLocation)]
+pub struct RunwayEnd {
+    ident: String,
+    airport_ref: Id,
+    airport_ident: String,
+    latitude_deg: Latitude,
+    longitude_deg: Longitude,
+    elevation_ft: Elevation,
+    heading_deg_true: Option<f64>,
+    displaced_threshold_ft: Option<i32>
+}
+
+impl RunwayEnd {
+    pub fn ident(&self) -> &str {
+        &self.ident
+    }
+    pub fn airport_ref(&self) -> Id {
+        self.airport_ref
+    }
+    pub fn airport_ident(&self) -> &str {
+        &self.airport_ident
+    }
+    pub fn heading_deg_true(&self) -> Option<f64> {
+        self.heading_deg_true
+    }
+    pub fn displaced_threshold_ft(&self) -> Option<i32> {
+        self.displaced_threshold_ft
+    }
+}
+
+impl ExtractLocation for RunwayEnd {}
 
 /// Returns a [`BTreeMap`] of all [`Runway`] in the latest OurAirports `runways.csv`
 /// with its ID as the key, sorted according to its keys.

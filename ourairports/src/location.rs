@@ -1,37 +1,44 @@
-//! TODO: description
+//! Contains types and traits related to containing location information.
 //!
 //! # Examples
 //! Extracting location from an `Airport` instance
 //!
 //! ```
 //! use ourairports::airports::*;
-//! use ourairports::location::ContainsLocation;
+//! use ourairports::location::{Location, ContainsLocation};
 //!
 //! # fn main() -> Result<(), Box<dyn std::error::Error>> {
 //!     let airports = get_airports_csv()?;
 //!
-//!     // London Heathrow Airport (ICAO: EGLL, IATA: LHR)
+//!     // Extracting the location of an airport
 //!     let heathrow_airport = airports.get(&2434).unwrap();
 //!     let location = heathrow_airport.extract_location();
 //!     assert_eq!(heathrow_airport.latitude_deg(), location.latitude_deg());
+//!
+//!     // Using `Location::from()` to convert an `Airport` to `Location`
+//!     let location_from = Location::from(heathrow_airport.clone());
+//!     assert_eq!(location.latitude_deg(), location_from.latitude_deg());
 //!
 //! #    Ok(())
 //! # }
 //! ```
 
-
-pub use ourairports_derive::ContainsLocation;
-
+/// Type alias for latitude values.
 pub type Latitude = Option<f64>;
+/// Type alias for longitude values.
 pub type Longitude = Option<f64>;
+/// Type alias for elevation values.
 pub type Elevation = Option<i32>;
 
-
+/// Trait to indicate that the type contains location information.
 pub trait ContainsLocation {
+    /// The latitude of `self` in decimal degrees (positive for north).
     fn latitude_deg(&self) -> Latitude;
+    /// The longitude `self` in decimal degrees (positive for north).
     fn longitude_deg(&self) -> Longitude;
+    /// The elevation of `self` above MSL in feet (negative for altitude below MSL).
     fn elevation_ft(&self) -> Elevation;
-    /// Extracts location information for this item.
+    /// Extracts location information from `self`.
     fn extract_location(&self) -> Location {
         Location {
             latitude_deg: self.latitude_deg(),
@@ -41,6 +48,10 @@ pub trait ContainsLocation {
     }
 }
 
+// TODO: add associated id with the location
+/// Contains the latitude, longitude and elevation for the location.
+///
+/// The value is `None` if it is not available or unknown.
 pub struct Location {
     latitude_deg: Latitude,
     longitude_deg: Longitude,

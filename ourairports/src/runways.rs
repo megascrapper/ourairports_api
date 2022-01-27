@@ -26,6 +26,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{bool_from_str, FetchError, Id, ToJsonString};
 use crate::location::{Elevation, Latitude, Longitude, ContainsLocation};
+use ourairports_derive::ContainsLocation;
 
 const RUNWAYS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/runways.csv";
 

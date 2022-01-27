@@ -29,6 +29,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::location::{ContainsLocation, Elevation, Latitude, Longitude};
 use crate::{bool_from_str, vec_string_from_string, Continent, FetchError, Id, ToJsonString};
+use ourairports_derive::ContainsLocation;
 
 const AIRPORTS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/airports.csv";
 
@@ -208,6 +209,7 @@ pub enum AirportType {
     #[serde(alias = "closed")]
     ClosedAirport,
     #[serde(alias = "balloonport")]
+    /// Balloon port
     BalloonPort, // undocumented type?
 }
 

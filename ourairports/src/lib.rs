@@ -24,7 +24,7 @@
 //! [data dictionary](https://ourairports.com/help/data-dictionary.html) and
 //! [map legend](https://ourairports.com/help/#legend).
 
-
+#![warn(missing_docs)]
 use log::debug;
 use reqwest::blocking::Client;
 use serde::de::{self, Unexpected};

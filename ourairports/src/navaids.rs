@@ -24,6 +24,7 @@ use std::cmp::Ordering;
 use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
 use crate::location::{Elevation, Latitude, Longitude, ContainsLocation};
+use ourairports_derive::ContainsLocation;
 
 const NAVAIDS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/navaids.csv";
 
@@ -231,6 +232,7 @@ pub enum UsageType {
 /// Possible power levels of navaids.
 #[derive(Deserialize, Serialize, Debug, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[serde(rename_all = "UPPERCASE")]
+#[allow(missing_docs)]
 pub enum NavaidPower {
     Low,
     Medium,
@@ -238,6 +240,12 @@ pub enum NavaidPower {
     Unknown,
 }
 
+/// Returns a [`BTreeMap`] of all [`Navaid`] in the latest OurAirports `navaids.csv`
+/// with its ID as the key, sorted according to its keys.
+///
+/// # Errors
+/// Returns [`FetchError`] if the data cannot be fetched or there's something wrong
+/// with the de serialization process.
 pub fn get_navaids_csv() -> Result<BTreeMap<Id, Navaid>, FetchError> {
     // get data
     debug!("getting data");

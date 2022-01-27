@@ -145,21 +145,6 @@ impl Airport {
     }
 }
 
-// impl ContainsLocation for Airport {
-//     /// The airport latitude in decimal degrees (positive for north).
-//     fn latitude_deg(&self) -> Latitude {
-//         self.latitude_deg
-//     }
-//     /// The airport longitude in decimal degrees (positive for east).
-//     fn longitude_deg(&self) -> Longitude {
-//         self.longitude_deg
-//     }
-//     /// The airport elevation above MSL in feet (negative for altitude below MSL).
-//     fn elevation_ft(&self) -> Elevation {
-//         self.elevation_ft
-//     }
-// }
-
 impl PartialEq for Airport {
     fn eq(&self, other: &Self) -> bool {
         self.id == other.id

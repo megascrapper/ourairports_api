@@ -34,7 +34,7 @@ pub type Elevation = Option<i32>;
 pub trait ContainsLocation {
     /// The latitude of `self` in decimal degrees (positive for north).
     fn latitude_deg(&self) -> Latitude;
-    /// The longitude `self` in decimal degrees (positive for north).
+    /// The longitude `self` in decimal degrees (positive for east).
     fn longitude_deg(&self) -> Longitude;
     /// The elevation of `self` above MSL in feet (negative for altitude below MSL).
     fn elevation_ft(&self) -> Elevation;
@@ -59,12 +59,15 @@ pub struct Location {
 }
 
 impl Location {
+    /// The latitude of `self` in decimal degrees (positive for north).
     pub fn latitude_deg(&self) -> Latitude {
         self.latitude_deg
     }
+    /// The longitude `self` in decimal degrees (positive for east).
     pub fn longitude_deg(&self) -> Longitude {
         self.longitude_deg
     }
+    /// The elevation of `self` above MSL in feet (negative for altitude below MSL).
     pub fn elevation_ft(&self) -> Elevation {
         self.elevation_ft
     }

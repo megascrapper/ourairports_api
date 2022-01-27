@@ -238,18 +238,31 @@ pub struct RunwayEnd {
 }
 
 impl RunwayEnd {
+    /// Identifier for the end of the runway.
     pub fn ident(&self) -> &str {
         &self.ident
     }
+    /// Internal OurAirports integer identifier for the associated airport.
+    ///
+    /// See [`Airport.id()`](../airports/struct.Airport.html#method.id) for more information about
+    /// airport ID.
     pub fn airport_ref(&self) -> Id {
         self.airport_ref
     }
+    /// The identifier of the associated airport for the runway.
+    ///
+    /// See [`Airport.ident()`](../airports/struct.Airport.html#method.ident) for more information
+    /// about airport identifiers.
     pub fn airport_ident(&self) -> &str {
         &self.airport_ident
     }
+    /// Heading of the end of the runway in degrees true.
+    /// Returns `None` if not available.
     pub fn heading_deg_true(&self) -> Option<f64> {
         self.heading_deg_true
     }
+    /// Length of the displaced threshold for the end of the runway, in feet.
+    /// Returns `None` if not available.
     pub fn displaced_threshold_ft(&self) -> Option<i32> {
         self.displaced_threshold_ft
     }

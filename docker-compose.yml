@@ -1,8 +1,0 @@
-services:
-  web:
-    build: .
-    command: ./ourairports_api
-    environment:
-      BIND_ADDRESS: 0.0.0.0:8080
-    ports:
-      - "8080:8080"

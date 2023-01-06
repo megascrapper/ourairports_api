@@ -1,7 +1,24 @@
-# ourairports_api
+# ourairports
 
-This repository contains the library for using [OurAirports open data](https://ourairports.com/data/) in Rust and a 
-website providing JSON REST API of OurAirports data.
+Rust interface for handling [OurAirports data](https://ourairports.com/data/).
 
-* [`ourairports` crate (library)](ourairports/README.md)
-* [`ourairports_api` crate (web app, in `web` directory)](web/README.md)
+## Usage
+
+Put `ourairports = "0.1"` in your `Cargo.toml`
+
+## License
+
+Licensed under either of
+
+ * Apache License, Version 2.0
+   ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
+ * MIT license
+   ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
+
+at your option.
+
+## Contribution
+
+Unless you explicitly state otherwise, any contribution intentionally submitted
+for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
+dual licensed as above, without any additional terms or conditions.

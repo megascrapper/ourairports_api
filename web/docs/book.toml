@@ -1,6 +1,0 @@
-[book]
-authors = ["Akbar Fadiansyah"]
-language = "en"
-multilingual = false
-src = "src"
-title = "OurAirports JSON API Documentation"

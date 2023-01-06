@@ -24,7 +24,7 @@
 //! [data dictionary](https://ourairports.com/help/data-dictionary.html) and
 //! [map legend](https://ourairports.com/help/#legend).
 
-#![warn(missing_docs)]
+
 use log::debug;
 use reqwest::blocking::Client;
 use serde::de::{self, Unexpected};
@@ -36,7 +36,6 @@ pub mod countries;
 pub mod navaids;
 pub mod regions;
 pub mod runways;
-pub mod location;
 
 /// Type of all ID fields.
 pub type Id = u64;
@@ -44,17 +43,14 @@ pub type Id = u64;
 /// Error type for errors in fetching OurAirports data (e.g. [`airports::get_airports_csv()`])
 #[derive(thiserror::Error, Debug)]
 pub enum FetchError {
-    /// Error in making connections and downloading data
     #[error("Network error: {0}")]
     NetworkError(#[from] reqwest::Error),
-    /// Error in parsing and deserializing data
     #[error("Error in deserializing: {0}")]
     DeserializeError(#[from] csv::Error),
 }
 
 /// List of allowed continent values.
 #[derive(Deserialize, Serialize, Debug, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
-#[allow(missing_docs)]
 pub enum Continent {
     #[serde(rename = "AF")]
     Africa,

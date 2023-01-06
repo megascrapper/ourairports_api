@@ -23,8 +23,6 @@ use serde::{Deserialize, Serialize};
 use std::cmp::Ordering;
 use std::collections::BTreeMap;
 use std::hash::{Hash, Hasher};
-use crate::location::{Elevation, Latitude, Longitude, ContainsLocation};
-use ourairports_derive::ContainsLocation;
 
 const NAVAIDS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data/navaids.csv";
 
@@ -32,7 +30,7 @@ const NAVAIDS_CSV_URL: &str = "https://davidmegginson.github.io/ourairports-data
 ///
 /// See the [OurAirports data dictionary](https://ourairports.com/help/data-dictionary.html#navaids)
 /// for more information of each field.
-#[derive(Deserialize, Debug, Clone, Serialize, ContainsLocation)]
+#[derive(Deserialize, Debug, Clone, Serialize)]
 pub struct Navaid {
     id: Id,
     filename: String,
@@ -41,15 +39,15 @@ pub struct Navaid {
     #[serde(rename = "type")]
     navaid_type: NavaidType,
     frequency_khz: String,
-    latitude_deg: Latitude,
-    longitude_deg: Longitude,
-    elevation_ft: Elevation,
+    latitude_deg: Option<f64>,
+    longitude_deg: Option<f64>,
+    elevation_ft: Option<i32>,
     iso_country: String,
     dme_frequency_khz: String,
     dme_channel: String,
-    dme_latitude_deg: Latitude,
-    dme_longitude_deg: Longitude,
-    dme_elevation_ft: Elevation,
+    dme_latitude_deg: Option<f64>,
+    dme_longitude_deg: Option<f64>,
+    dme_elevation_ft: Option<i32>,
     slaved_variation_deg: Option<f64>,
     magnetic_variation_deg: Option<f64>,
     #[serde(rename = "usageType")]
@@ -91,6 +89,18 @@ impl Navaid {
     /// For an NDB or NDB-DME, you can use this frequency directly.
     pub fn frequency_khz(&self) -> &str {
         &self.frequency_khz
+    }
+    /// The latitude of the navaid in decimal degrees (negative for south). Returns `None` if not available.
+    pub fn latitude_deg(&self) -> Option<f64> {
+        self.latitude_deg
+    }
+    /// The longitude of the navaid in decimal degrees (negative for west). Returns `None` if not available.
+    pub fn longitude_deg(&self) -> Option<f64> {
+        self.longitude_deg
+    }
+    /// The navaid's elevation MSL in feet. Returns `None` if not available.
+    pub fn elevation_ft(&self) -> Option<i32> {
+        self.elevation_ft
     }
     /// The two-character [ISO 3166:1-alpha2 code](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
     /// for the country that operates the navaid.
@@ -232,7 +242,6 @@ pub enum UsageType {
 /// Possible power levels of navaids.
 #[derive(Deserialize, Serialize, Debug, Clone, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[serde(rename_all = "UPPERCASE")]
-#[allow(missing_docs)]
 pub enum NavaidPower {
     Low,
     Medium,
@@ -240,12 +249,6 @@ pub enum NavaidPower {
     Unknown,
 }
 
-/// Returns a [`BTreeMap`] of all [`Navaid`] in the latest OurAirports `navaids.csv`
-/// with its ID as the key, sorted according to its keys.
-///
-/// # Errors
-/// Returns [`FetchError`] if the data cannot be fetched or there's something wrong
-/// with the de serialization process.
 pub fn get_navaids_csv() -> Result<BTreeMap<Id, Navaid>, FetchError> {
     // get data
     debug!("getting data");

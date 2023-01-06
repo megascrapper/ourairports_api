@@ -1,9 +1,0 @@
-services:
-  web:
-    build: .
-    command: ./ourairports_api
-    restart: unless-stopped
-    environment:
-      BIND_ADDRESS: 0.0.0.0:8080  # change this to change the address to bind
-    ports:
-      - "8080:8080"
